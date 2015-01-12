@@ -659,7 +659,7 @@ public class AlarmReceiver extends BroadcastReceiver {
     }
 
     ;
-
+// fd
     public void getDataFromServerAfterTime(long userId) {
         DatabaseOperations db = new DatabaseOperations(_context);
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(_context);
