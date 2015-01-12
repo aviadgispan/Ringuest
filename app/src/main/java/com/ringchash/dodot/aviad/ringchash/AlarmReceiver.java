@@ -58,7 +58,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 //        _context=c;
 //    }
     public void dodo(){
-
+//fd
     }
     @Override
 
