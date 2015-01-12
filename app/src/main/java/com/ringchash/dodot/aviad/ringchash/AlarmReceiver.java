@@ -3,7 +3,7 @@ package com.ringchash.dodot.aviad.ringchash;
 /**
  * Created by AVIAD on 12/23/2014.
  *
- * 1212
+ * 1111
  */
 
 import android.app.DownloadManager;
@@ -57,7 +57,11 @@ public class AlarmReceiver extends BroadcastReceiver {
 //    public  AlarmReceiver(Context c){
 //        _context=c;
 //    }
+    public void dodo(){
+
+    }
     @Override
+
     public void onReceive(Context context, Intent intent) {
         _context = context;
         // For our recurring task, we'll just display a message
