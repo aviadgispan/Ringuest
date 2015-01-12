@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/layoutId">
+
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="update data from server"
+        android:id="@+id/updateDataFromServer"
+        android:layout_gravity="center_horizontal" />
+=
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="update ringtone"
+        android:id="@+id/updateRingtone"
+        android:layout_gravity="center_horizontal" />
+
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="clear data"
+        android:id="@+id/clearData"
+        android:layout_gravity="center_horizontal" />
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="print adsmaneger data"
+        android:id="@+id/printAdsManegerData"
+        android:layout_gravity="center_horizontal" />
+
+
+</LinearLayout>

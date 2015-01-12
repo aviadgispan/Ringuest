@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.ringchash.dodot.aviad.ringchash" >
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_DOWNLOAD_MANAGER" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".EditProfile"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".RingtoneTest"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="com.ringchash.dodot.aviad.ringchash.EINGTEST" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+
+        <activity
+            android:name=".AdsList"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="com.ringchash.dodot.aviad.ringchash.ADSLIST" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".EventAds"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="com.ringchash.dodot.aviad.ringchash.EVENTADS" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".BackActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="com.ringchash.dodot.aviad.ringchash.BACK" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <service android:name=".ManagerService"></service>
+        <receiver android:name=".AlarmReceiver">
+
+        </receiver>
+        <receiver android:name=".PhoneStateReceiver">                     <!-- 6 -->
+            <intent-filter>                                                   <!-- 7 -->
+                <action android:name="android.intent.action.PHONE_STATE"/>   <!-- 8 -->
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".BootReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+    </application>
+
+</manifest>

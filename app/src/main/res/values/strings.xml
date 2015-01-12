@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Ring Chash</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+
+
+    <string name="name_field_edit_profile">שם:</string>
+    <string name="birth_year_edit_profile">שנת לידה:</string>
+    <string name="gender_edit_profile">מין:</string>
+
+    <string name="email_edit_profile">כתובת אלקטרונית:</string>
+    <string name="continue_edit_profile">המשך ></string>
+
+
+</resources>

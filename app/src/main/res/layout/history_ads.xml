@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/layoutId">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/idAds"
+        android:layout_gravity="center_horizontal"
+        android:text="1" />
+
+    <Button
+        android:layout_width="404dp"
+        android:layout_height="wrap_content"
+        android:text="event Add"
+        android:id="@+id/eventAdd" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="sp and friends"
+        android:id="@+id/recive"
+        android:layout_gravity="center_horizontal" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="save Diffult Maneger"
+        android:id="@+id/spManeger"
+        android:layout_gravity="center_horizontal" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="count"
+        android:id="@+id/countLast24"
+        android:layout_gravity="center_horizontal" />
+
+</LinearLayout>

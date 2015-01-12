@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color
+        name="color_Background_profile"
+        >#85c5e1</color>
+    <color
+        name="color_Background_input"
+        >#BCE0EE</color>
+    <color
+        name="text_color_profile"
+        >#ffffff</color>
+</resources>

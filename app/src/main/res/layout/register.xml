@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_Background_profile"
+    android:id="@+id/layoutId">
+
+
+<ScrollView
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent">
+<LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+
+
+    <TextView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/name_field_edit_profile"
+        android:id="@+id/textView"
+        android:textSize="32sp"
+        android:textColor="@color/text_color_profile"
+        android:layout_gravity="center_horizontal" />
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        >
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:inputType="textPersonName"
+            android:textColor="@color/text_color_profile"
+            android:text=""
+            android:ems="10"
+            android:textSize="32sp"
+            android:id="@+id/editText"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/color_Background_input"
+            android:gravity="center_horizontal" />
+        </RelativeLayout>
+    <TextView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/birth_year_edit_profile"
+        android:id="@+id/birth_text"
+        android:textSize="32sp"
+        android:textColor="@color/text_color_profile"
+        android:layout_gravity="center_horizontal" />
+    <DatePicker
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:calendarViewShown="false"
+        android:id="@+id/datePicker"
+
+        android:layout_gravity="center_horizontal" />
+    <TextView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/gender_edit_profile"
+        android:id="@+id/gender_text"
+        android:textSize="32sp"
+        android:textColor="@color/text_color_profile"
+        android:layout_gravity="center_horizontal" />
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="horizontal" android:layout_width="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="wrap_content"
+
+        >
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:cropToPadding="false"
+            android:id="@+id/buttonFemale"
+            android:background="@null"
+            android:paddingRight="5dp"
+            android:src="@drawable/woman"
+            android:adjustViewBounds="false" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:cropToPadding="false"
+            android:id="@+id/buttonMale"
+            android:paddingLeft="5dp"
+            android:background="@null"
+            android:src="@drawable/man"
+            android:adjustViewBounds="false" />
+
+
+    </LinearLayout>
+
+
+
+    <TextView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/email_edit_profile"
+
+        android:textSize="32sp"
+        android:textColor="@color/text_color_profile"
+        android:layout_gravity="center_horizontal"
+        android:textStyle="italic" />
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        >
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:inputType="textPersonName"
+            android:textColor="@color/text_color_profile"
+            android:text=""
+            android:ems="10"
+            android:textSize="32sp"
+            android:id="@+id/emailText"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/color_Background_input"
+            android:gravity="center_horizontal" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        >
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+
+            android:textColor="@color/text_color_profile"
+            android:text="@string/continue_edit_profile"
+            android:ems="10"
+            android:textSize="32sp"
+            android:id="@+id/finishRegister"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/color_Background_input"
+            android:gravity="center_horizontal" />
+    </RelativeLayout>
+
+
+
+</LinearLayout>
+
+</ScrollView>
+</LinearLayout>
