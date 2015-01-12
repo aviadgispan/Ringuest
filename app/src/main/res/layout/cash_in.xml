@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/cash_in_background"
+    android:id="@+id/layoutId">
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/cash_in_header">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/menu_profile"
+            android:gravity="right"
+            android:orientation="horizontal">
+            <TextView
+                android:paddingBottom="15dp"
+                android:paddingTop="15dp"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/get_my_money"
+                android:textSize="32sp"
+                android:textColor="@color/text_color_profile"
+                 />
+            <ImageButton
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingRight="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:cropToPadding="false"
+
+                android:id="@+id/picture_profile"
+                android:background="@null"
+                android:layout_gravity="center_vertical"
+
+                android:src="@drawable/cash_in_hello"
+                android:adjustViewBounds="false" />
+
+            <ImageButton
+
+
+                android:paddingRight="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:cropToPadding="false"
+
+                android:id="@+id/back"
+                android:background="@null"
+                android:layout_alignRight="@+id/menu_profile"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/back_btn"
+                android:adjustViewBounds="false" />
+
+        </LinearLayout>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_marginTop="50dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+
+        android:background="@color/cash_in_background_of_button"
+        android:gravity="center_horizontal">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/send_me_btn_cashin"
+
+            android:background="@drawable/send_me_btn_cashin"
+
+
+            android:layout_gravity="center_horizontal" />
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+
+    android:layout_alignBottom="@+id/send_me_btn_cashin"
+    android:layout_alignLeft="@+id/send_me_btn_cashin"
+    android:layout_alignRight="@+id/send_me_btn_cashin"
+    android:layout_alignTop="@+id/send_me_btn_cashin"
+    android:gravity="center_horizontal"
+    android:paddingTop="10dp"
+    android:textSize="20dp"
+    android:textColor="@color/cash_in_background"
+    android:text="@string/send_me_money"
+
+    />
+
+    </RelativeLayout>
+<TextView
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="20dp"
+    android:gravity="center"
+    android:textSize="30dp"
+    android:textColor="@color/cash_in_background_of_button"
+    android:text="@string/contact_me_about_money"
+    />
+
+</LinearLayout>

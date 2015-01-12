@@ -9,4 +9,45 @@
     <color
         name="text_color_profile"
         >#ffffff</color>
+    <color
+        name="cash_in_background_of_button"
+        >#ffffff</color>
+    <color
+        name="up_menu_profile"
+        >#2aabe5</color>
+
+    <color
+        name="menu_background"
+        >#f0ffff</color>
+    <color
+        name="bill_header"
+        >#66d183</color>
+
+    <color
+        name="bill_background"
+        >#92d5a2</color>
+    <color
+        name="cash_in_header"
+        >#efb900</color>
+    <color
+        name="cash_in_background"
+        >#efc944</color>
+    <color
+        name="cupon_header"
+        >#f66294</color>
+    <color
+        name="cupon_background"
+        >#f5a7c1</color>
+
+    <color
+        name="rings_header"
+        >#fd5757</color>
+    <color
+        name="rings_background"
+        >#feb9aa</color>
+
+    <color
+        name="rings_button"
+        >#ff9b8b</color>
+
 </resources>

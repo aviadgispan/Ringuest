@@ -57,9 +57,8 @@ public class AlarmReceiver extends BroadcastReceiver {
 //    public  AlarmReceiver(Context c){
 //        _context=c;
 //    }
-    public void dodo(){
-//fd
-    }
+
+
     @Override
 
     public void onReceive(Context context, Intent intent) {
@@ -190,7 +189,7 @@ public class AlarmReceiver extends BroadcastReceiver {
     }
 
     private static String[] getAllFileNameNotToDownLoad(Context context) {
-        File[] fileFromRingCash = getAllFileNameInRingCash();
+        File[] fileFromRingCash = getAllFileInRingCash();
         if (fileFromRingCash == null || fileFromRingCash.length == 0) {
             return getAllDownloadListInProgress(context);
         } else {
@@ -468,7 +467,7 @@ public class AlarmReceiver extends BroadcastReceiver {
     }
 
     private static File[] getAllFileNameToRemove(Context context) {
-        File[] fileInSdCard = getAllFileNameInRingCash();
+        File[] fileInSdCard = getAllFileInRingCash();
         String[] fileNameInAddManager = getAllFileNameInAdsManager(context);
         int counter = 0;
         for (int i = 0; i < fileInSdCard.length; i++) {
@@ -492,7 +491,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     ;
 
-    protected static File[] getAllFileNameInRingCash() {
+    protected static File[] getAllFileInRingCash() {
         File sdCardRoot = Environment.getExternalStorageDirectory();
         File yourDir = new File(sdCardRoot, "RingCashFolder");
         int counter = 0;
@@ -512,10 +511,18 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         }
         return arr;
-    }
-
-    ;
-
+    };
+    public static String[] getAllFileNameInRingCash(){
+      File[] arr= getAllFileInRingCash();
+      if(arr==null||arr.length==0){
+          return null;
+      }
+        String[] arrName=new String[arr.length];
+        for(int i=0;i<arr.length;i++) {
+            arrName[i] = arr[i].getName();
+        }
+        return removeAllDuplicate(arrName);
+    };
     private static String[] getAllFileNameInAdsManager(Context context) {
         Gson gson = new Gson();
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);

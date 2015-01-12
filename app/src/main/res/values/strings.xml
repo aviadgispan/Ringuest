@@ -13,6 +13,21 @@
 
     <string name="email_edit_profile">כתובת אלקטרונית:</string>
     <string name="continue_edit_profile">המשך ></string>
+    <string name="hello">"שלום, "</string>
+    <string name="user">יוסי</string>
+    <string name="choose_ring">בחירת צלצולים</string>
+    <string name="account_status">מצב חשבון</string>
+    <string name="get_my_money">לפדות את הכסף שלי</string>
+    <string name="profile">פרופיל</string>
+    <string name="coupon">קופונים</string>
 
+    <string name="in_your_account">בחשבונך יש כעת:</string>
+    <string name="all_profit">סך הכל נצברו בחשבונך:</string>
+    <string name="coin">ש"ח</string>
+    <string name="optional_sum">"   100"</string>
+    <string name="send_me_money">שלח לי כסף</string>
+    <string name="contact_me_about_money">צרו עימי קשר על מנת \r\n להעביר אלי את הכסף</string>
+    <string name="need_to_fill_all_details">אנא מלא את כל הפרטים.</string>
+    <string name="all_details_are_in">המידע נשמר בהצלחה</string>
 
 </resources>

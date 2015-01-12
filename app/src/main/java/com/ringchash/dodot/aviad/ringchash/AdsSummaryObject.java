@@ -1,9 +1,6 @@
 package com.ringchash.dodot.aviad.ringchash;
 
-import android.app.Activity;
 import android.content.Context;
-import android.net.Uri;
-import android.os.Environment;
 
 import java.io.File;
 import java.util.Calendar;
@@ -277,7 +274,7 @@ public class AdsSummaryObject {
             this._valid = false;
             return false;
         }
-        File[] fileArr = AlarmReceiver.getAllFileNameInRingCash();
+        File[] fileArr = AlarmReceiver.getAllFileInRingCash();
         if (fileArr == null || fileArr.length == 0) {
             return false;
         }

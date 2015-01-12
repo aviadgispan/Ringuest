@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/rings_background"
+    android:id="@+id/layoutId">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/rings_header">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/menu_profile"
+            android:gravity="right"
+            android:orientation="horizontal">
+            <TextView
+                android:paddingBottom="15dp"
+                android:paddingTop="15dp"
+                android:paddingRight="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/choose_ring"
+                android:textSize="32sp"
+                android:textColor="@color/text_color_profile"
+                />
+            <ImageButton
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingRight="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:cropToPadding="false"
+
+                android:id="@+id/picture_profile"
+                android:background="@null"
+                android:layout_gravity="center_vertical"
+
+                android:src="@drawable/profile_icon"
+                android:adjustViewBounds="false" />
+
+            <ImageButton
+
+                android:paddingRight="10dp"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:cropToPadding="false"
+
+                android:id="@+id/back"
+                android:background="@null"
+                android:layout_alignRight="@+id/menu_profile"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/back_btn"
+                android:adjustViewBounds="false" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+<ScrollView
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/ringsList"
+
+        android:orientation="vertical">
+
+        </LinearLayout>
+    </ScrollView>
+
+
+
+
+</LinearLayout>

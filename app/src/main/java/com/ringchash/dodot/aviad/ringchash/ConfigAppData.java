@@ -19,6 +19,7 @@ public class ConfigAppData {
      1: male ,
      -1 : unknown
      */
+
     public static final String USER_GENDER="USER_GENDER";
     public static final String USER_EMAIL="USER_EMAIL";
     public static final String USER_BIRTH_DAY="USER_BIRTH_DAY";
@@ -53,5 +54,5 @@ public class ConfigAppData {
     public static final long UPDATE_SERVER_DATA_INTERVAL=UPDATE_INTERVAL*5;
 
 
-
+    public static final String CUPON_URL="https://s3-eu-west-1.amazonaws.com/matos/cupon.png";
 }
