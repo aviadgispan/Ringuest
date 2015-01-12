@@ -2,6 +2,8 @@ package com.ringchash.dodot.aviad.ringchash;
 
 /**
  * Created by AVIAD on 12/23/2014.
+ *
+ * 1212
  */
 
 import android.app.DownloadManager;
@@ -659,7 +661,11 @@ public class AlarmReceiver extends BroadcastReceiver {
     }
 
     ;
-// fddsa
+    // fddsa
+    //fsd
+    //fs
+    //dsada
+
     public void getDataFromServerAfterTime(long userId) {
         DatabaseOperations db = new DatabaseOperations(_context);
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(_context);
