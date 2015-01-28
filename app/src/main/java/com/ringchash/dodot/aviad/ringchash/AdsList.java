@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 
 /**
- * Created by AVIAD on 12/17/2014.
+ * Created by AVIAD   Gispan on 12/17/2014.
  */
 public class AdsList extends Activity {
     @Override

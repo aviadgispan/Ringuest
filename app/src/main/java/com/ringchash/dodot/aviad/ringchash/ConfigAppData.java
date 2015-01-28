@@ -5,21 +5,26 @@ package com.ringchash.dodot.aviad.ringchash;
  */
 public class ConfigAppData {
     ////////////////////SERVER DATA //////////////////////
-    public static final String URL_SERVER="http://ec2-54-93-56-200.eu-central-1.compute.amazonaws.com:8080";
+// /   http://ec2-54-93-56-200.eu-central-1.compute.amazonaws.com:8080
+    public static final String URL_SERVER="http://10.0.0.5:8080";
     public static final String UPDATE_ADS_DATA_HISTORY_FROM_USER=URL_SERVER+"/updateAdsData";
     public static final String UPDATE_ADS_DATA_FROM_SERVER=URL_SERVER+"/getMyAdsData";
+    public static final String UPDATE_USER_FROM_SERVER=URL_SERVER+"/updateUserData";
     public static final String ADS_SUMMARY_MANEGER ="ADS_SUMMARY_MANEGER";
     ////////////////////USER DATA ///////////////////////
     /*
      user data in shared preferences
      */
     public static final String USER_NAME="USER_NAME";
+
+    public static final String USER_PHONE_NUMBER="USER_PHONE_NUMBER";
+
     /*
      0:female
      1: male ,
      -1 : unknown
      */
-
+    public static final String USER_FB_ID="USER_FB_ID";
     public static final String USER_GENDER="USER_GENDER";
     public static final String USER_EMAIL="USER_EMAIL";
     public static final String USER_BIRTH_DAY="USER_BIRTH_DAY";

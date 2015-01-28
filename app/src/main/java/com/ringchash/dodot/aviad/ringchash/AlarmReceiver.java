@@ -990,5 +990,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         }
     }
+       public void saveNewUserToServer(){
 
+       };
 }

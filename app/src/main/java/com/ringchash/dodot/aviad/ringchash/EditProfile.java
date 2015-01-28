@@ -4,8 +4,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -13,6 +16,25 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by AVIAD on 1/1/2015.
@@ -24,6 +46,23 @@ public class EditProfile extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register);
+       // USER_PHONE_NUMBER
+        SharedPreferences sp= PreferenceManager.getDefaultSharedPreferences(this);
+        if(sp.getString(ConfigAppData.USER_PHONE_NUMBER,null)==null){
+            TelephonyManager tel=(TelephonyManager)getSystemService(Context.TELECOM_SERVICE);
+
+
+            if(tel!=null&&tel.getLine1Number()!=null){
+                String str=tel.getLine1Number().toString();
+                SharedPreferences.Editor edit=sp.edit();
+                edit.putString(ConfigAppData.USER_PHONE_NUMBER,str);
+                edit.commit();
+            }
+        }
+
+
+
+
         DatePicker dp = (DatePicker)
                 findViewById(R.id.datePicker);
         dp.setCalendarViewShown(false);
@@ -31,6 +70,24 @@ public class EditProfile extends Activity {
         ImageButton btnFemale=(ImageButton)findViewById(R.id.buttonFemale);
         Button continueBtn=(Button)findViewById(R.id.finishRegister);
         updateData();
+
+        int[] arrOfTextId={R.id.profile_edit_header,R.id.name_text,R.id.birth_text,R.id.gender_text,R.id.email_textView};
+
+        ///nameEdit emailText
+        int[] arrOfEditId={R.id.nameEdit,R.id.emailText};
+
+        Typeface tfAlef;
+        tfAlef = Typeface.createFromAsset(getAssets(), "fonts/alef.ttf");
+
+        for(int i=0;i<arrOfTextId.length;i++){
+            TextView t=(TextView)findViewById(arrOfTextId[i]);
+            t.setTypeface(tfAlef);
+        }
+        for(int i=0;i<arrOfEditId.length;i++){
+            EditText t=(EditText)findViewById(arrOfEditId[i]);
+            t.setTypeface(tfAlef);
+        }
+        continueBtn.setTypeface(tfAlef);
         continueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,7 +136,7 @@ public class EditProfile extends Activity {
             };
         });
 
-     //   saveDataOfUser(this,"Aviad Gispan",1,"aviadgispan@gmail.com",23,9,1984);
+        //   saveDataOfUser(this,"Aviad Gispan",1,"aviadgispan@gmail.com",23,9,1984);
     }
     public void makeToast(String str){
         Toast.makeText(this,str,Toast.LENGTH_LONG).show();
@@ -168,7 +225,7 @@ public class EditProfile extends Activity {
 
         }
 
-return isExistAllData;
+        return isExistAllData;
 
 
 
@@ -209,6 +266,87 @@ return isExistAllData;
         edit.putInt(ConfigAppData.USER_BIRTH_MONTH,month);
         edit.putInt(ConfigAppData.USER_BIRTH_DAY,day);
         edit.commit();
+        int id=sp.getInt(ConfigAppData.USER_ID,-1);
+        String fb=sp.getString(ConfigAppData.USER_FB_ID,"");
+        String phoneNumber=sp.getString(ConfigAppData.USER_PHONE_NUMBER,"");
+
+        updateUserData(c,id,name,gender, email,day, month,year,fb,phoneNumber);
+
+    }
+    public static void updateUserData(final Context c,int userId,String name,int gender,String email,int day,int month,int year,String fb,String phoneNumber){
+        final HttpClient httpClient = new DefaultHttpClient();
+        final HttpPost httpPost = new HttpPost(ConfigAppData.UPDATE_USER_FROM_SERVER);
+        final List<NameValuePair> nameValuePair = new ArrayList<NameValuePair>(9);
+        nameValuePair.add(new BasicNameValuePair("userID",userId+""));
+        nameValuePair.add(new BasicNameValuePair("name",name));
+        nameValuePair.add(new BasicNameValuePair("gender",gender+""));
+        nameValuePair.add(new BasicNameValuePair("email",email));
+        nameValuePair.add(new BasicNameValuePair("day",day+""));
+        nameValuePair.add(new BasicNameValuePair("phoneNumber",phoneNumber));
+        nameValuePair.add(new BasicNameValuePair("year",year+""));
+        nameValuePair.add(new BasicNameValuePair("month",month+""));
+        nameValuePair.add(new BasicNameValuePair("fbId",fb));
+
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    httpPost.setEntity(new UrlEncodedFormEntity(nameValuePair));
+
+                } catch (UnsupportedEncodingException e)
+                {
+                    e.printStackTrace();
+                }
+                try {
+                    HttpResponse response = httpClient.execute(httpPost);
+                    // write response to log
+                    //	String str=response.getEntity().toString();
+                    HttpEntity entity = response.getEntity();
+                    //str=EntityUtils.getContentMimeType(entity);
+                    String inputLine ;
+                    String str="";
+                    BufferedReader in = new BufferedReader(new InputStreamReader(entity.getContent()));
+                    try {
+                        while ((inputLine = in.readLine()) != null) {
+                            str=str+inputLine;
+
+                        }
+                        // AnsFromServer
+                        Gson gson = new Gson();
+                        AnsFromServer ans = gson.fromJson(str, AnsFromServer.class);
+                        if(ans.id>-1){
+                            SharedPreferences sp= PreferenceManager.getDefaultSharedPreferences(c);
+                            int id=sp.getInt(ConfigAppData.USER_ID,-1);
+                            if(id==-1){
+                                SharedPreferences.Editor edit=sp.edit();
+                                edit.putInt(ConfigAppData.USER_ID,ans.id);
+                                edit.commit();
+                            }
+                        }
+                        Log.d("from server ans :", ans.id+"");
+                        in.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+
+
+                } catch (ClientProtocolException e) {
+                    // Log exception
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    // Log exception
+                    e.printStackTrace();
+                }
+
+
+
+
+            }
+        });
+        t.start();
+
+
     }
 
 }

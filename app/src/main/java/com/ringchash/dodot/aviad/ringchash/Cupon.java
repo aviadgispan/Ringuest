@@ -6,6 +6,7 @@ import android.content.Intent;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 
 import java.io.IOException;
@@ -38,7 +40,10 @@ public class Cupon extends Activity {
 
 
         ImageButton backButton = (ImageButton) findViewById(R.id.back);
-
+        TextView t=(TextView)findViewById(R.id.cuppon_header);
+        Typeface tfAlef;
+        tfAlef = Typeface.createFromAsset(getAssets(), "fonts/alef.ttf");
+        t.setTypeface(tfAlef);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

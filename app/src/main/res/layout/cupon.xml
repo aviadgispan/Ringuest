@@ -17,6 +17,7 @@
             android:gravity="right"
             android:orientation="horizontal">
             <TextView
+                android:id="@+id/cuppon_header"
                 android:paddingBottom="15dp"
                 android:paddingTop="15dp"
                 android:paddingRight="15dp"
