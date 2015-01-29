@@ -46,7 +46,7 @@ public class EditProfile extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register);
-       // USER_PHONE_NUMBER
+        // USER_PHONE_NUMBER
         SharedPreferences sp= PreferenceManager.getDefaultSharedPreferences(this);
         if(sp.getString(ConfigAppData.USER_PHONE_NUMBER,null)==null){
             TelephonyManager tel=(TelephonyManager)getSystemService(Context.TELECOM_SERVICE);
@@ -94,11 +94,12 @@ public class EditProfile extends Activity {
 
                 saveData();
                 if(!isNeedToRegister()){
-
+                    startRunIfNeed();
                     Intent intent = new Intent("com.ringchash.dodot.aviad.ringchash.HELLO");
                     startActivity(intent);
                     String str = getResources().getString(R.string.all_details_are_in);
                     makeToast(str);
+
 
                 }else{
 
@@ -138,6 +139,16 @@ public class EditProfile extends Activity {
 
         //   saveDataOfUser(this,"Aviad Gispan",1,"aviadgispan@gmail.com",23,9,1984);
     }
+    public void startRunIfNeed(){
+        SharedPreferences sp= PreferenceManager.getDefaultSharedPreferences(this);
+        boolean firstRun=sp.getBoolean(ConfigAppData.FIRST_RUN,true);
+        if(firstRun){
+            SharedPreferences.Editor edit=sp.edit();
+            edit.putBoolean(ConfigAppData.FIRST_RUN,false);
+            edit.commit();
+            this.startService(new Intent(this,ManagerService.class));
+        }
+    }
     public void makeToast(String str){
         Toast.makeText(this,str,Toast.LENGTH_LONG).show();
     }
@@ -168,6 +179,9 @@ public class EditProfile extends Activity {
         EditText emailEdit = (EditText) findViewById(R.id.emailText);
 
         String email=emailEdit.getText().toString();
+        if(email==null||email.length()==0||name==null||name.length()==0){
+            return;
+        }
         DatePicker date=(DatePicker)findViewById(R.id.datePicker);
         int day=date.getDayOfMonth();
         int month=date.getMonth();
@@ -259,9 +273,15 @@ public class EditProfile extends Activity {
     public static  void saveDataOfUser(Context c,String name,int gender,String email,int day,int month,int year){
         SharedPreferences sp= PreferenceManager.getDefaultSharedPreferences(c);
         SharedPreferences.Editor edit=sp.edit();
-        edit.putString(ConfigAppData.USER_NAME,name);
+        if(name!=null&&name.length()>0){
+
+            edit.putString(ConfigAppData.USER_NAME,name);
+        }
+
         edit.putInt(ConfigAppData.USER_GENDER,gender);
-        edit.putString(ConfigAppData.USER_EMAIL,email);
+        if(email!=null&&email.length()>0){
+            edit.putString(ConfigAppData.USER_NAME,email);
+        }
         edit.putInt(ConfigAppData.USER_BIRTH_YEAR,year);
         edit.putInt(ConfigAppData.USER_BIRTH_MONTH,month);
         edit.putInt(ConfigAppData.USER_BIRTH_DAY,day);

@@ -64,6 +64,32 @@ public class PhoneStateMonitor extends PhoneStateListener {
                 break;
         }
     }
+    public void updateAdsHistoryManagerUntilGettingCash(int idApp,long current){
+        SharedPreferences sp= PreferenceManager.getDefaultSharedPreferences(this.context);
+        String adsHistoryManagerUntilGettingCashString=sp.getString(ConfigAppData.ADS_HISTORY_MANAGER_UNTIL_GETTING_CASH,null);
+        AdsHistoryManagerUntilGettingCash a;
+        if(adsHistoryManagerUntilGettingCashString==null){
+            a=new AdsHistoryManagerUntilGettingCash();
+            a.update(idApp,current);
+
+        }else{
+            Gson gson=new Gson();
+            a = gson.fromJson(adsHistoryManagerUntilGettingCashString, AdsHistoryManagerUntilGettingCash.class);
+            if(a==null){
+                a=new AdsHistoryManagerUntilGettingCash();
+                a.update(idApp,current);
+            }else{
+                if(!a.update(idApp,current)){
+                    return;
+                }
+            }
+
+        }
+        SharedPreferences.Editor edit = sp.edit();
+        String str = new Gson().toJson(a);
+        edit.putString(ConfigAppData.ADS_HISTORY_MANAGER_UNTIL_GETTING_CASH, str);
+        edit.commit();
+    }
     public void handleCall(boolean receive){
         long current=System.currentTimeMillis();
         long timeRing=current-startRing;
@@ -77,6 +103,17 @@ public class PhoneStateMonitor extends PhoneStateListener {
             int idApp=getAdsIdAccordingToCurrentRing(this.context);
             if(idApp>=0){
                 updateEventAds(idApp);
+                updateAdsHistoryManagerUntilGettingCash(idApp,current);
+                SharedPreferences sp= PreferenceManager.getDefaultSharedPreferences(context);
+                int counterRing=sp.getInt(ConfigAppData.COUNTER_ALL_RING,0);
+                int counterRingUnPaid=sp.getInt(ConfigAppData.COUNTER_ALL_RING_THAT_UNPAID,0);
+                counterRing++;
+                counterRingUnPaid++;
+                SharedPreferences.Editor edit = sp.edit();
+                edit.putInt(ConfigAppData.COUNTER_ALL_RING,counterRing);
+                edit.putInt(ConfigAppData.COUNTER_ALL_RING_THAT_UNPAID,counterRingUnPaid);
+                edit.commit();
+                // COUNTER_ALL_RING
             }
 
         }else{

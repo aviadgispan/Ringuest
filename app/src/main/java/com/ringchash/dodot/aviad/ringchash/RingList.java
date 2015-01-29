@@ -34,9 +34,10 @@ import java.util.Arrays;
  * Created by AVIAD on 1/12/2015.
  */
 public class RingList extends Activity{
-   public static int _id = 1;
-   public static RingPlayData[] _ringPlayButtonData;
+    public static int _id = 1;
+    public RingPlayData[] _ringPlayButtonData;
     public static String _currentPlay=null;
+    public boolean _pause =false;
     MediaPlayer _mp ;
     public static int padding=15;
 
@@ -66,6 +67,7 @@ public class RingList extends Activity{
 
     // Returns a valid id that isn't in use
     public int findId(){
+        _id=_id+5;
         int i=_id;
         View v = findViewById(i);
 
@@ -132,6 +134,8 @@ public class RingList extends Activity{
 
                 if(getStatus(fileNameArr[i])){
                     btnIsOn.setImageResource(R.drawable.v_rings);
+                }else{
+                    btnIsOn.setImageResource(R.drawable.empty);
                 }
                 btnIsOn.setBackgroundColor(Color.parseColor("#ff9b8b"));
                 addPlayRing(fileNameArr[i], idIsPlay, idIsOn);
@@ -211,7 +215,8 @@ public class RingList extends Activity{
                     if(getStatus(fileName)){
                         b.setImageResource(R.drawable.v_rings);
                     }else{
-                        b.setImageResource(0);
+                        b.setImageResource(R.drawable.empty);
+
                     }
                 }
             }
@@ -280,6 +285,33 @@ public class RingList extends Activity{
         }
 
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        if(_mp!=null){
+
+            if(_currentPlay!=null){
+                if(_mp.isPlaying()){
+                    updatePlay(_currentPlay);
+                    _currentPlay=null;
+                }
+            }
+
+        }
+    }
+
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(_mp.isPlaying()){
+            _mp.release();
+        }
+    }
+
     public boolean getStatus(String fileName){
         Gson gson = new Gson();
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);

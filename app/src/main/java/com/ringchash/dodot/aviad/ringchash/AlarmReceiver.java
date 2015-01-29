@@ -662,22 +662,20 @@ public class AlarmReceiver extends BroadcastReceiver {
         SharedPreferences.Editor edit = sp.edit();
         edit.putLong(ConfigAppData.LAST_UPDATE_SERVER_DATA_FROM_USER, System.currentTimeMillis());
         edit.commit();
-        long user_id = getUserId();
+        int user_id = getUserId();
         getDataFromServerAfterTime(user_id);
     }
 
-    private long getUserId() {
+    private int getUserId() {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(_context);
-        return sp.getLong(ConfigAppData.USER_ID, -1);
-    }
-
-    ;
+        return sp.getInt(ConfigAppData.USER_ID, -1);
+    };
     // fddsa
     //fsd
     //fs
     //dsada
 
-    public void getDataFromServerAfterTime(long userId) {
+    public void getDataFromServerAfterTime(int userId) {
         DatabaseOperations db = new DatabaseOperations(_context);
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(_context);
         long maxTime = -1;
@@ -755,7 +753,7 @@ public class AlarmReceiver extends BroadcastReceiver {
     }
 
     public void saveAllEventToServer(long userId, String data) {
-        // TODO Auto-generated method stub
+
 
 
         final HttpClient httpClient = new DefaultHttpClient();
