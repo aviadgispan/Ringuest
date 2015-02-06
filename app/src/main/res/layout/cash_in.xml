@@ -46,10 +46,13 @@
             <ImageButton
 
 
-                android:paddingRight="15dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingRight="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:cropToPadding="false"
+
 
                 android:id="@+id/back"
                 android:background="@null"
@@ -60,51 +63,81 @@
 
         </LinearLayout>
     </RelativeLayout>
+
+    <TextView
+        android:id="@+id/contact_me"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="20dp"
+        android:gravity="center"
+        android:textSize="30dp"
+        android:textColor="@color/cash_in_background_of_button"
+        android:text="@string/contact_me_about_money"
+        />
     <RelativeLayout
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="10dp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
 
-        android:background="@color/cash_in_background_of_button"
+
         android:gravity="center_horizontal">
 
-        <ImageButton
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/send_me_btn_cashin"
-
+            android:text="@string/send_me_money"
+            android:textSize="20dp"
+            android:textColor="@color/cash_in_background"
             android:background="@drawable/send_me_btn_cashin"
-
-
             android:layout_gravity="center_horizontal" />
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
 
-    android:layout_alignBottom="@+id/send_me_btn_cashin"
-    android:layout_alignLeft="@+id/send_me_btn_cashin"
-    android:layout_alignRight="@+id/send_me_btn_cashin"
-    android:layout_alignTop="@+id/send_me_btn_cashin"
-    android:gravity="center_horizontal"
-    android:paddingTop="10dp"
-    android:textSize="20dp"
-    android:id="@+id/send_me_money"
-    android:textColor="@color/cash_in_background"
-    android:text="@string/send_me_money"
-
-    />
 
 
     </RelativeLayout>
-<TextView
-    android:id="@+id/contact_me"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:paddingTop="20dp"
-    android:gravity="center"
-    android:textSize="30dp"
-    android:textColor="@color/cash_in_background_of_button"
-    android:text="@string/contact_me_about_money"
-    />
+
+    <TextView
+        android:id="@+id/cash_now_in_bill"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/in_your_account"
+        android:textSize="32sp"
+        android:textColor="@color/text_color_profile"
+        android:gravity="center" />
+
+        <RelativeLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                >
+
+
+        <TextView
+            android:id="@+id/cash_now_in_shekel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/coin"
+            android:textSize="32sp"
+            android:textColor="@color/text_color_profile"
+            android:gravity="center" />
+        <TextView
+            android:id="@+id/cash_now_in_bill_sum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/optional_sum"
+            android:textSize="32sp"
+            android:textColor="@color/text_color_profile"
+            android:gravity="center"/>
+            </LinearLayout>
+        </RelativeLayout>
+
 
 </LinearLayout>

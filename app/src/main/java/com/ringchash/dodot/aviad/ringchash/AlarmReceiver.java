@@ -15,11 +15,13 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
@@ -164,12 +166,47 @@ public class AlarmReceiver extends BroadcastReceiver {
         int age = c.get(Calendar.YEAR) - year;
         // get his gps point
         LocationManager locationManager;
-        locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-        Location l = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
-        double lat = l.getLatitude();
-        double lon = l.getLongitude();
+        locationManager= (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        Location l;
+        LocationListener ll = new LocationListner();
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, ll);
+        if(locationManager.isProviderEnabled( LocationManager.GPS_PROVIDER )){
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,  ll);
+        }
+        if(locationManager.isProviderEnabled( LocationManager.NETWORK_PROVIDER)){
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0,  ll);
+        }
+
+        if(locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)!=null){
+            l=locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+        }else{
+
+            if(locationManager.isProviderEnabled( LocationManager.NETWORK_PROVIDER)&&locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)!=null){
+                l=locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            }else{
+                l=locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                if(l==null){
+                    l=locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                }
+                if(l==null){
+                    l=locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
+                }
+
+            }
+        }
+
+
+        double lat;
+        double lon;
+        if(l!=null){
+            lat = l.getLatitude();
+            lon = l.getLongitude();
+            getAdsDataFromServerAccordingToUserData(age, gender, lat, lon, allMyAdsId);
+        }
+
         /// start sending to the server
-        getAdsDataFromServerAccordingToUserData(age, gender, lat, lon, allMyAdsId);
+
 
     }
 
@@ -492,8 +529,15 @@ public class AlarmReceiver extends BroadcastReceiver {
     ;
 
     protected static File[] getAllFileInRingCash() {
+
         File sdCardRoot = Environment.getExternalStorageDirectory();
         File yourDir = new File(sdCardRoot, "RingCashFolder");
+        if(yourDir==null){
+            return null;
+        }
+        if(!yourDir.exists()){
+          yourDir.mkdir();
+        }
         int counter = 0;
         for (File f : yourDir.listFiles()) {
             if (f.isFile()) {
@@ -887,6 +931,12 @@ public class AlarmReceiver extends BroadcastReceiver {
     public static File getFileByName(String filename) {
         File sdCardRoot = Environment.getExternalStorageDirectory();
         File yourDir = new File(sdCardRoot, "RingCashFolder");
+        if(yourDir==null){
+            return null;
+        }
+        if(!yourDir.exists()){
+            return null;
+        }
         for (File f : yourDir.listFiles()) {
             if (f.isFile())
 
@@ -991,4 +1041,25 @@ public class AlarmReceiver extends BroadcastReceiver {
        public void saveNewUserToServer(){
 
        };
+
+
+    private class LocationListner implements LocationListener {
+        @Override
+        public void onLocationChanged(Location location) {
+            if (location != null) {
+                Log.d("LOCATION CHANGED", location.getLatitude() + "");
+                Log.d("LOCATION CHANGED", location.getLongitude() + "");
+
+            }
+        }
+        @Override
+        public void onProviderDisabled(String provider) {
+        }
+        @Override
+        public void onProviderEnabled(String provider) {
+        }
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+        }
+    }
 }

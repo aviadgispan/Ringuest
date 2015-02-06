@@ -23,7 +23,7 @@ public class PhoneStateMonitor extends PhoneStateListener {
     long startRing;
     public static final int MIN_RING_TIME_MIL=4000;
     public static final int MAX_RING_TIME_MIL=180000;
-    public static final double VALID_VOLUME=0.5;
+    public static final double VALID_VOLUME=0;
     public PhoneStateMonitor(Context context) {
         super();
         // TODO Auto-generated constructor stub
@@ -124,10 +124,13 @@ public class PhoneStateMonitor extends PhoneStateListener {
     public static int getAdsIdAccordingToCurrentRing(Context context){
         SharedPreferences sp= PreferenceManager.getDefaultSharedPreferences(context);
         String adsSummaryManagerString = sp.getString(EventAds.Ads_summary_Manager, null);
+        if(adsSummaryManagerString==null){
+            return -1;
+        }
         Gson gson = new Gson();
         AdsSummaryManager adsSummaryManager = gson.fromJson(adsSummaryManagerString, AdsSummaryManager.class);
         Uri uriDefualt= RingtoneManager.getActualDefaultRingtoneUri(context,RingtoneManager.TYPE_RINGTONE);
-        if(adsSummaryManager._arr==null){
+        if(adsSummaryManager==null||adsSummaryManager._arr==null){
             return -1;
         }else{
             for(int i=0;i<adsSummaryManager._arr.length;i++){

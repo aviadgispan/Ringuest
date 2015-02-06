@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
@@ -122,7 +123,35 @@ public class BackActivity extends Activity {
         // get his gps point
         LocationManager locationManager;
         locationManager = (LocationManager) this.getSystemService(LOCATION_SERVICE);
-        Location l = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
+        Location l;
+        LocationListener ll = new LocationListner();
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, ll);
+        if(locationManager.isProviderEnabled( LocationManager.GPS_PROVIDER )){
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,  ll);
+        }
+        if(locationManager.isProviderEnabled( LocationManager.NETWORK_PROVIDER)){
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0,  ll);
+        }
+
+        if(locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)!=null){
+            l=locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+        }else{
+
+            if(locationManager.isProviderEnabled( LocationManager.NETWORK_PROVIDER)&&locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)!=null){
+                l=locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            }else{
+                l=locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                if(l==null){
+                    l=locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                }
+                if(l==null){
+                    l=locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
+                }
+
+            }
+        }
+
         double lat = l.getLatitude();
         double lon = l.getLongitude();
         /// start sending to the server
@@ -605,5 +634,23 @@ public class BackActivity extends Activity {
     }
 
 
+    private class LocationListner implements LocationListener {
+        @Override
+        public void onLocationChanged(Location location) {
+            if (location != null) {
+                Log.d("LOCATION CHANGED", location.getLatitude() + "");
+                Log.d("LOCATION CHANGED", location.getLongitude() + "");
 
+            }
+        }
+        @Override
+        public void onProviderDisabled(String provider) {
+        }
+        @Override
+        public void onProviderEnabled(String provider) {
+        }
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+        }
+    }
 }

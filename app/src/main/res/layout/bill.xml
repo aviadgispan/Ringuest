@@ -69,11 +69,12 @@
         <LinearLayout
 
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:orientation="vertical"
             >
 
             <TextView
+                android:paddingTop="50dp"
                 android:id="@+id/cash_now_in_bill_header"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -86,6 +87,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:paddingBottom="20dp"
                 android:orientation="horizontal">
 
 
@@ -112,6 +114,7 @@
 
             </LinearLayout>
             <Button
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:cropToPadding="false"
@@ -126,6 +129,8 @@
 
                 android:layout_gravity="center_horizontal" />
             <ImageView
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:src="@drawable/line_rings"

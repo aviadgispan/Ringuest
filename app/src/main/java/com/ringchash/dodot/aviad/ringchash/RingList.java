@@ -307,9 +307,12 @@ public class RingList extends Activity{
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(_mp.isPlaying()){
-            _mp.release();
+        if(_mp!=null){
+            if(_mp.isPlaying()){
+                _mp.release();
+            }
         }
+
     }
 
     public boolean getStatus(String fileName){

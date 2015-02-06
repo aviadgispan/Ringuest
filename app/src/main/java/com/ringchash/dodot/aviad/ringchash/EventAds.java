@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -190,9 +191,46 @@ public class EventAds extends Activity {
     }
 
     public void updateEventAds(int id){
+
+
         LocationManager locationManager;
-        locationManager = (LocationManager)this.getSystemService(LOCATION_SERVICE);
-        Location l=locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
+        locationManager= (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        Location l;
+
+        LocationListener ll = new LocationListner();
+
+        if(locationManager.isProviderEnabled( LocationManager.GPS_PROVIDER )){
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,  ll);
+        }
+        if(locationManager.isProviderEnabled( LocationManager.NETWORK_PROVIDER)){
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0,  ll);
+        }
+        if(locationManager.isProviderEnabled( LocationManager.PASSIVE_PROVIDER)){
+            locationManager.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER, 0, 0,  ll);
+        }
+
+        if(locationManager.isProviderEnabled( LocationManager.GPS_PROVIDER )){
+            l=locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        }else{
+            if(locationManager.isProviderEnabled( LocationManager.NETWORK_PROVIDER)){
+                l=locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            }else{
+                l=locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                if(l==null){
+                    l=locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                }
+                if(l==null){
+                    l=locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
+                }
+
+            }
+        }
+
+
+        if(l==null){
+            return;
+        }
+
         double x=l.getLatitude();
         double y=l.getLongitude();
         String gps=x+","+y;
@@ -256,5 +294,24 @@ public class EventAds extends Activity {
             }
         });
         t.start();
+    }
+    private class LocationListner implements LocationListener {
+        @Override
+        public void onLocationChanged(Location location) {
+            if (location != null) {
+                Log.d("LOCATION CHANGED", location.getLatitude() + "");
+                Log.d("LOCATION CHANGED", location.getLongitude() + "");
+
+            }
+        }
+        @Override
+        public void onProviderDisabled(String provider) {
+        }
+        @Override
+        public void onProviderEnabled(String provider) {
+        }
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+        }
     }
 }

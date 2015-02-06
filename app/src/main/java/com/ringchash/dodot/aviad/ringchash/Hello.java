@@ -50,7 +50,6 @@ public class Hello extends Activity {
         btn_account_status.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent = new Intent("com.ringchash.dodot.aviad.ringchash.BILL");
                 startActivity(intent);
             };
@@ -82,4 +81,11 @@ public class Hello extends Activity {
         });
 
     }
+//    public void tryA(){
+//        AlarmReceiver a=new AlarmReceiver();
+//        a._context=this;
+//        a.updateFile(this);
+//    }
+
+
 }

@@ -49,7 +49,7 @@ public class EditProfile extends Activity {
         // USER_PHONE_NUMBER
         SharedPreferences sp= PreferenceManager.getDefaultSharedPreferences(this);
         if(sp.getString(ConfigAppData.USER_PHONE_NUMBER,null)==null){
-            TelephonyManager tel=(TelephonyManager)getSystemService(Context.TELECOM_SERVICE);
+            TelephonyManager tel=(TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
 
 
             if(tel!=null&&tel.getLine1Number()!=null){
@@ -280,7 +280,7 @@ public class EditProfile extends Activity {
 
         edit.putInt(ConfigAppData.USER_GENDER,gender);
         if(email!=null&&email.length()>0){
-            edit.putString(ConfigAppData.USER_NAME,email);
+            edit.putString(ConfigAppData.USER_EMAIL,email);
         }
         edit.putInt(ConfigAppData.USER_BIRTH_YEAR,year);
         edit.putInt(ConfigAppData.USER_BIRTH_MONTH,month);
@@ -296,6 +296,7 @@ public class EditProfile extends Activity {
     public static void updateUserData(final Context c,int userId,String name,int gender,String email,int day,int month,int year,String fb,String phoneNumber){
         final HttpClient httpClient = new DefaultHttpClient();
         final HttpPost httpPost = new HttpPost(ConfigAppData.UPDATE_USER_FROM_SERVER);
+
         final List<NameValuePair> nameValuePair = new ArrayList<NameValuePair>(9);
         nameValuePair.add(new BasicNameValuePair("userID",userId+""));
         nameValuePair.add(new BasicNameValuePair("name",name));
@@ -307,11 +308,12 @@ public class EditProfile extends Activity {
         nameValuePair.add(new BasicNameValuePair("month",month+""));
         nameValuePair.add(new BasicNameValuePair("fbId",fb));
 
+
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    httpPost.setEntity(new UrlEncodedFormEntity(nameValuePair));
+                    httpPost.setEntity(new UrlEncodedFormEntity(nameValuePair,"UTF-8"));
 
                 } catch (UnsupportedEncodingException e)
                 {

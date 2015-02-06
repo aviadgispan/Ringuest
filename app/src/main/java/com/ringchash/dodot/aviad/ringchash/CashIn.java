@@ -9,8 +9,10 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -44,7 +46,7 @@ public class CashIn extends Activity {
         setContentView(R.layout.cash_in);
         ImageButton backButton=(ImageButton)findViewById(R.id.back);
         //get_cash_header send_me_money contact_me_about_money
-        int[] arrOfTextId={R.id.get_cash_header,R.id.send_me_money,R.id.contact_me};
+        int[] arrOfTextId={R.id.get_cash_header,R.id.contact_me,R.id.cash_now_in_shekel,R.id.cash_now_in_bill,R.id.cash_now_in_bill_sum};
         Typeface tfAlef;
         tfAlef = Typeface.createFromAsset(getAssets(), "fonts/alef.ttf");
 
@@ -52,6 +54,11 @@ public class CashIn extends Activity {
             TextView t=(TextView)findViewById(arrOfTextId[i]);
             t.setTypeface(tfAlef);
         }
+        SharedPreferences sp= PreferenceManager.getDefaultSharedPreferences(this);
+        int counterRingUnPaid=sp.getInt(ConfigAppData.COUNTER_ALL_RING_THAT_UNPAID,0);
+        double sumOfAllMoneyFromRingUnPaid=counterRingUnPaid*ConfigAppData.PAY_FOR_RING;
+        TextView moneyUnPaid=(TextView)findViewById(R.id.cash_now_in_bill_sum);
+        moneyUnPaid.setText(" "+sumOfAllMoneyFromRingUnPaid);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,18 +67,35 @@ public class CashIn extends Activity {
 
             };
         });
-        ImageButton sendMeMoney=(ImageButton)findViewById(R.id.send_me_btn_cashin);
+        Button sendMeMoney=(Button)findViewById(R.id.send_me_btn_cashin);
         sendMeMoney.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                askForMoney();
+                if(canGetMoney()){
+                    askForMoney();
+                }
+
 
             };
         });
 
 
     }
+    public boolean canGetMoney(){
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        int unpaid=sp.getInt(ConfigAppData.COUNTER_ALL_RING_THAT_UNPAID,-1);
 
+        if(unpaid==-1||unpaid*ConfigAppData.PAY_FOR_RING<ConfigAppData.MIN_FOR_GET_CASH){
+            String str=getResources().getString(R.string.not_enough_money_to_redeem);
+            str=str+ConfigAppData.MIN_FOR_GET_CASH;
+            str=str+" ";
+            str=str+getResources().getString(R.string.shekel);
+            Toast.makeText(this,str,Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
+//ConfigAppData.COUNTER_ALL_RING_THAT_UNPAID
+    };
     public void askForMoney() {
         Context context=this;
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
@@ -273,6 +297,9 @@ public class CashIn extends Activity {
                         if(isOk){
                             updateAdsHistoryManagerUntilCashThatServerFinished(current);
 
+                            makeToast(getResources().getString(R.string.ask_money_ok));
+                            Intent intent = new Intent("com.ringchash.dodot.aviad.ringchash.HELLO");
+                            startActivity(intent);
 
                         }
                         in.close();
@@ -296,6 +323,11 @@ public class CashIn extends Activity {
         t.start();
 
     }
+
+    public void makeToast(String text){
+
+        Toast.makeText(this,text,Toast.LENGTH_LONG).show();
+    }
     public  void updateAdsHistoryManagerUntilCashThatServerFinished(long cur){
 
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
@@ -313,8 +345,6 @@ public class CashIn extends Activity {
         edit.putString(ConfigAppData.ADS_HISTORY_MANAGER_UNTIL_GETTING_CASH,str);
         edit.putInt(ConfigAppData.COUNTER_ALL_RING_THAT_UNPAID,0);
         edit.commit();
-
-
     };
 
 }

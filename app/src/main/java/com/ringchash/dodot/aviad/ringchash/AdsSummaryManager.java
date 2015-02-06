@@ -2,7 +2,10 @@ package com.ringchash.dodot.aviad.ringchash;
 
 import android.content.Context;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Bundle;
+import android.util.Log;
 
 /**
  * Created by AVIAD on 12/22/2014.
@@ -243,7 +246,37 @@ public class AdsSummaryManager {
     public AdsSummaryObject getRelevant(){
         LocationManager locationManager;
         locationManager = (LocationManager)_context.getSystemService(_context.LOCATION_SERVICE);
-        Location l=locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
+
+        Location l;
+        LocationListener ll = new LocationListner();
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, ll);
+        if(locationManager.isProviderEnabled( LocationManager.GPS_PROVIDER )){
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,  ll);
+        }
+        if(locationManager.isProviderEnabled( LocationManager.NETWORK_PROVIDER)){
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0,  ll);
+        }
+
+        if(locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)!=null){
+            l=locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+        }else{
+
+            if(locationManager.isProviderEnabled( LocationManager.NETWORK_PROVIDER)&&locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)!=null){
+                l=locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            }else{
+                l=locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                if(l==null){
+                    l=locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                }
+                if(l==null){
+                    l=locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
+                }
+
+            }
+        }
+
+
         double lat=l.getLatitude();
         double lon=l.getLongitude();
         AdsSummaryObject[] arr= getAllRelevant(lat,lon);
@@ -320,5 +353,25 @@ public class AdsSummaryManager {
         arr[a] = arr[b];
         arr[b] = temp;
         return arr;
+    }
+
+    private class LocationListner implements LocationListener {
+        @Override
+        public void onLocationChanged(Location location) {
+            if (location != null) {
+                Log.d("LOCATION CHANGED", location.getLatitude() + "");
+                Log.d("LOCATION CHANGED", location.getLongitude() + "");
+
+            }
+        }
+        @Override
+        public void onProviderDisabled(String provider) {
+        }
+        @Override
+        public void onProviderEnabled(String provider) {
+        }
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+        }
     }
 }

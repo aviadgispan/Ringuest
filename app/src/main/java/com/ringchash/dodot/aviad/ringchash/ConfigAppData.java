@@ -5,10 +5,10 @@ package com.ringchash.dodot.aviad.ringchash;
  */
 public class ConfigAppData {
     ////////////////////SERVER DATA //////////////////////
-// /   http://ec2-54-93-56-200.eu-central-1.compute.amazonaws.com:8080
-    public static final String URL_SERVER="http://10.0.0.2:8080";
+// /  "http://10.0.0.2:8080"
+   // public static final String URL_SERVER="http://ec2-54-93-56-200.eu-central-1.compute.amazonaws.com:8080";
 
-
+   public static final String URL_SERVER="http://10.0.0.6:8080";
     public static final String UPDATE_ASK_FOR_MONEY=URL_SERVER+"/updateAskForMoney";
     public static final String UPDATE_ADS_DATA_HISTORY_FROM_USER=URL_SERVER+"/updateAdsData";
     public static final String UPDATE_ADS_DATA_FROM_SERVER=URL_SERVER+"/getMyAdsData";
@@ -60,14 +60,14 @@ public class ConfigAppData {
     private static final int SECOND=1000;
     public static final int MINUTE=60*SECOND;
     public static final int HOUR=60*MINUTE;
-    public static final long UPDATE_INTERVAL=MINUTE*2;
+    public static final long UPDATE_INTERVAL=MINUTE/4;
     public static final long UPDATE_FILE_INTERVAL=UPDATE_INTERVAL*2;
     public static final long UPDATE_SERVER_DATA_INTERVAL=UPDATE_INTERVAL*5;
 
     public static final String CUPON_URL="https://s3-eu-west-1.amazonaws.com/matos/cupon.png";
 
-    public static final double PAY_FOR_RING=0.05;
-    public static final double MIN_FOR_GET_CASH=0.1;
+    public static final double PAY_FOR_RING=1.5;
+    public static final double MIN_FOR_GET_CASH=2;
 
     public static final String COUNTER_ALL_RING="COUNTER_ALL_RING";
     public static final String COUNTER_ALL_RING_THAT_UNPAID="COUNTER_ALL_RING_THAT_UNPAID";

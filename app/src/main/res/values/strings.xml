@@ -30,4 +30,8 @@
     <string name="need_to_fill_all_details">אנא מלא את כל הפרטים.</string>
     <string name="all_details_are_in">המידע נשמר בהצלחה</string>
 
+
+    <string name="not_enough_money_to_redeem">ניתן לפדות את הכסף רק מעל ל-</string>
+    <string name="shekel">ש"ח</string>
+    <string name="ask_money_ok">הבקשה נקלטה בהצלחה. </string>
 </resources>
