@@ -3,20 +3,25 @@ package com.ringchash.dodot.aviad.ringchash;
 /**
  * Created by AVIAD on 12/28/2014.
  */
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationManager;
 import android.media.AudioManager;
+import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+
+import java.io.File;
 
 public class PhoneStateMonitor extends PhoneStateListener {
     Context context;
@@ -114,6 +119,8 @@ public class PhoneStateMonitor extends PhoneStateListener {
                 edit.putInt(ConfigAppData.COUNTER_ALL_RING_THAT_UNPAID,counterRingUnPaid);
                 edit.commit();
                 // COUNTER_ALL_RING
+                setAdsRingtone();
+
             }
 
         }else{
@@ -159,5 +166,164 @@ public class PhoneStateMonitor extends PhoneStateListener {
 
         // String str= new Gson().toJson(target);
     }
+    public void setAdsRingtone() {
+        updateDefaultRingtoneValue();
+        Gson gson = new Gson();
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        String adsSummaryManagerString = sp.getString(ConfigAppData.ADS_SUMMARY_MANEGER, null);
+        // ads is not in shared preferences
+        if (adsSummaryManagerString == null) {
+            setUserRingtone();
+            return;
 
+        }
+        AdsSummaryManager adsSummaryManager = gson.fromJson(adsSummaryManagerString, AdsSummaryManager.class);
+        adsSummaryManager._context = context;
+        AdsSummaryObject target = adsSummaryManager.getRelevant();
+        if (target == null || target._fileName == null || target._fileName.length() == 0) {
+            setUserRingtone();
+            return;
+        }
+        if (target._uri == null) {
+            String urlNewRingtone = updateRingtoneByFileName(target);
+            updateUriInAdsManager(target._fileName, urlNewRingtone);
+
+        } else {
+            Uri u = Uri.parse(target._uri);
+            Ringtone r = RingtoneManager.getRingtone(context, u);
+            if (r == null) {
+                String urlNewRingtone = updateRingtoneByFileName(target);
+                updateUriInAdsManager(target._fileName, urlNewRingtone);
+            } else {
+                RingtoneManager.setActualDefaultRingtoneUri(
+                        context, RingtoneManager.TYPE_RINGTONE,
+                        u);
+                updateInSPCurrentRingtone(target._uri);
+                SharedPreferences.Editor edit = sp.edit();
+                edit.putBoolean(ConfigAppData.IS_ADS_RINGONE_PLAY, true);
+                edit.commit();
+            }
+        }
+
+    }
+    public void setUserRingtone() {
+
+
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        // IS_USER_RINGTONE_PLAY
+
+        SharedPreferences.Editor edit = sp.edit();
+        edit.putBoolean(ConfigAppData.IS_ADS_RINGONE_PLAY, false);
+
+        edit.commit();
+        String uri = sp.getString(ConfigAppData.DEFAULT_RINGTONE_NAME, null);
+        if (uri != null) {
+            RingtoneManager.setActualDefaultRingtoneUri(context, RingtoneManager.TYPE_RINGTONE, Uri.parse(uri));
+        } else {
+
+            // is removed or null...
+        }
+    }
+    public String updateRingtoneByFileName(AdsSummaryObject obj) {
+        File f = AlarmReceiver.getFileByName(obj._fileName);
+        if (f == null) {
+
+            return null;
+        } else {
+            ContentValues values = new ContentValues();
+            values.put(MediaStore.MediaColumns.DATA, f.getAbsolutePath());
+            values.put(MediaStore.MediaColumns.TITLE, obj._fileName);
+
+            values.put(MediaStore.MediaColumns.MIME_TYPE, "audio/ogg");
+            values.put(MediaStore.Audio.Media.ARTIST, obj._companyName);
+
+            Uri uri = MediaStore.Audio.Media.getContentUriForPath(f.getAbsolutePath());
+            context.getContentResolver().delete(
+                    uri,
+                    MediaStore.MediaColumns.DATA + "=\""
+                            + f.getAbsolutePath() + "\"", null);
+            Uri newUri = context.getContentResolver().insert(uri, values);
+
+            RingtoneManager.setActualDefaultRingtoneUri(
+                    context, RingtoneManager.TYPE_RINGTONE,
+                    newUri);
+            updateInSPCurrentRingtone(newUri.toString());
+            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+            SharedPreferences.Editor edit = sp.edit();
+            edit.putBoolean(ConfigAppData.IS_ADS_RINGONE_PLAY, true);
+            edit.commit();
+            return newUri.toString();
+
+        }
+    }
+    public void updateInSPCurrentRingtone(String uri){
+
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor edit = sp.edit();
+        edit.putString(ConfigAppData.CUTTENT_ADS_RINGTONE,uri);
+        edit.commit();
+
+    }
+    public void updateDefaultRingtoneValue() {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        boolean isInRingAdsStatus = sp.getBoolean(ConfigAppData.IS_ADS_RINGONE_PLAY, false);
+        if (isInRingAdsStatus) {
+
+            Uri u = RingtoneManager.getActualDefaultRingtoneUri(context, RingtoneManager.TYPE_RINGTONE);
+            String currentAds = sp.getString(ConfigAppData.CUTTENT_ADS_RINGTONE, null);
+            if (currentAds != null && u != null) {
+                // ringtone was change
+                if (!currentAds.equals(u.toString())) {
+                    if (!isUrlInAdsManager(u.toString())) {
+                        SharedPreferences.Editor edit = sp.edit();
+                        edit.putString(ConfigAppData.DEFAULT_RINGTONE_NAME, u.toString());
+                        edit.commit();
+                    }
+                }
+            }
+        } else {
+            Uri u = RingtoneManager.getActualDefaultRingtoneUri(context, RingtoneManager.TYPE_RINGTONE);
+            String cur = u.toString();
+            String def = sp.getString(ConfigAppData.DEFAULT_RINGTONE_NAME, null);
+            if (def == null) {
+                if (cur != null) {
+                    SharedPreferences.Editor edit = sp.edit();
+                    edit.putString(ConfigAppData.DEFAULT_RINGTONE_NAME, cur);
+                    edit.commit();
+                }
+            } else {
+                if (!def.equals(cur)) {
+                    if (!isUrlInAdsManager(cur)) {
+                        SharedPreferences.Editor edit = sp.edit();
+                        edit.putString(ConfigAppData.DEFAULT_RINGTONE_NAME, cur);
+                        edit.commit();
+                    }
+                }
+            }
+        }
+    }
+    public boolean isUrlInAdsManager(String url){
+        return false;
+    };
+    public void updateUriInAdsManager(String fileName, String uri) {
+        if (uri == null || fileName == null || fileName.length() == 0 || uri.length() == 0) {
+            return;
+        }
+        Gson gson = new Gson();
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        String adsSummaryManagerString = sp.getString(ConfigAppData.ADS_SUMMARY_MANEGER, null);
+        // ads is not in shared preferences
+        if (adsSummaryManagerString != null) {
+            AdsSummaryManager adsSummaryManager = gson.fromJson(adsSummaryManagerString, AdsSummaryManager.class);
+            adsSummaryManager._context = context;
+            adsSummaryManager.updateUriWithFileName(fileName, uri);
+            adsSummaryManager._context = null;
+            SharedPreferences.Editor edit = sp.edit();
+            String str = new Gson().toJson(adsSummaryManager);
+            edit.putString(ConfigAppData.ADS_SUMMARY_MANEGER, str);
+            edit.commit();
+
+
+        }
+    }
 }

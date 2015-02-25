@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@drawable/log_in_bg"
+    >
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        >
+<ImageView
+    android:layout_width="wrap_content"
+    android:layout_marginTop="70dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:src="@drawable/slogan"
+    />
+        <ImageButton
+            android:layout_marginTop="25dp"
+            android:id="@+id/connect_as_fb"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:cropToPadding="false"
+            android:background="@null"
+            android:src="@drawable/connect_with_fb"
+            android:visibility="visible"
+            />
+        <ImageButton
+            android:id="@+id/connect_as_user"
+            android:layout_marginTop="25dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:cropToPadding="false"
+            android:background="@null"
+            android:src="@drawable/connect_with_ringuest"
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_marginTop="40dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/icon_log_in"
+          />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_marginBottom="10dp"
+            android:id="@+id/validRelativeLayout"
+            >
+
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_alignParentBottom="true"
+
+            >
+            <TextView
+                android:id="@+id/terms_web"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_terms_of_use2"
+                android:textSize="15sp"
+                android:textColor="@color/color_terms_of_use"
+
+
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_terms_of_use1"
+                android:textSize="15sp"
+                android:textColor="@color/color_terms_of_use"
+                />
+            <ImageButton
+                android:paddingLeft="8dp"
+                android:background="@null"
+                android:id="@+id/term_of_use"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/license"
+
+                />
+
+
+        </LinearLayout>
+
+
+        </RelativeLayout>
+        </LinearLayout>
+
+</LinearLayout>

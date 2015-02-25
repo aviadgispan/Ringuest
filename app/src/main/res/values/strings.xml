@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Ring Chash</string>
+    <string name="app_name">Ringuest</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
 
 
     <string name="name_field_edit_profile">שם:</string>
+    <string name="last_name">שם משפחה:</string>
     <string name="birth_year_edit_profile">שנת לידה:</string>
     <string name="gender_edit_profile">מין:</string>
 
@@ -15,10 +16,15 @@
     <string name="continue_edit_profile">המשך ></string>
     <string name="hello">"שלום, "</string>
     <string name="user">יוסי</string>
+    <string name="choose_ring_hello">"   בחירת צלצולים"</string>
     <string name="choose_ring">בחירת צלצולים</string>
+    <string name="account_status_hello">"   מצב חשבון"</string>
     <string name="account_status">מצב חשבון</string>
-    <string name="get_my_money">לפדות את הכסף שלי</string>
+    <string name="get_my_money_hello">"   לפדות את הכסף"</string>
+    <string name="get_my_money">לפדות את הכסף</string>
+    <string name="profile_hello">"   פרופיל"</string>
     <string name="profile">פרופיל</string>
+    <string name="coupon_hello">"   קופונים"</string>
     <string name="coupon">קופונים</string>
 
     <string name="in_your_account">בחשבונך יש כעת:</string>
@@ -34,4 +40,9 @@
     <string name="not_enough_money_to_redeem">ניתן לפדות את הכסף רק מעל ל-</string>
     <string name="shekel">ש"ח</string>
     <string name="ask_money_ok">הבקשה נקלטה בהצלחה. </string>
+    <string name="text_terms_of_use1">הנני מסכים ל</string>
+    <string name="text_terms_of_use2"><a href="https://s3-eu-west-1.amazonaws.com/matos/terms.htm">תנאי ההצטרפות</a></string>
+
+    <string name="app_id">773470569399510</string>
+    <string name="need_user_consent">יש להסכים לתנאי השימוש!</string>
 </resources>

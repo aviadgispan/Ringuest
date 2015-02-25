@@ -46,6 +46,17 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".Login"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="com.ringchash.dodot.aviad.ringchash.LOGIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".Hello"
             android:label="@string/app_name" >
@@ -135,6 +146,14 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
         </receiver>
+        <activity android:name="com.facebook.LoginActivity"
+
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+
+            android:label="@string/app_name" />
+
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/app_id"/>
+
     </application>
 
 </manifest>

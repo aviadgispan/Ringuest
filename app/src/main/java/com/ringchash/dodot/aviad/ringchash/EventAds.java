@@ -90,7 +90,7 @@ public class EventAds extends Activity {
             public void onClick(View v) {
                 EditText idAds = (EditText) findViewById(R.id.idAds);
                 int id_ads = Integer.parseInt(idAds.getText().toString());
-               // getDataFromServerAfterTime(100);
+              //  getDataFromServerAfterTime(100);
             //    dtopTableFromServer();
                updateEventAds(id_ads);
                 //saveAllEventToServer(23,"das");
@@ -101,7 +101,6 @@ public class EventAds extends Activity {
     }
     public void saveAdsSummaryManeger(AdsSummaryManager a){
         a._context=null;
-
         String str = new Gson().toJson(a);
         Log.d("Gson : ",str);
         SharedPreferences sp= PreferenceManager.getDefaultSharedPreferences(this);
@@ -185,7 +184,7 @@ public class EventAds extends Activity {
             SharedPreferences.Editor edit=sp.edit();
             edit.putLong(last_update,maxTime);
             edit.commit();
-            Log.d("new UPDATE: ", ""+maxTime);
+
 
         }
     }
@@ -299,8 +298,8 @@ public class EventAds extends Activity {
         @Override
         public void onLocationChanged(Location location) {
             if (location != null) {
-                Log.d("LOCATION CHANGED", location.getLatitude() + "");
-                Log.d("LOCATION CHANGED", location.getLongitude() + "");
+//                Log.d("LOCATION CHANGED", location.getLatitude() + "");
+//                Log.d("LOCATION CHANGED", location.getLongitude() + "");
 
             }
         }

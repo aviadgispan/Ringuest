@@ -4,13 +4,16 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.util.Log;
 
 
 import com.google.gson.Gson;
@@ -110,10 +113,40 @@ public class RingtoneControl {
             adsSummaryManager._context = this._context;
 
             LocationManager locationManager;
-            locationManager = (LocationManager) _context.getSystemService(Context.LOCATION_SERVICE);
-            Location l = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
-            double lat1 = l.getLatitude();
-            double lon1 = l.getLongitude();
+            locationManager = (LocationManager)_context.getSystemService(_context.LOCATION_SERVICE);
+
+            Location l;
+            LocationListener ll = new LocationListner();
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, ll);
+            if(locationManager.isProviderEnabled( LocationManager.GPS_PROVIDER )){
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,  ll);
+            }
+            if(locationManager.isProviderEnabled( LocationManager.NETWORK_PROVIDER)){
+                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0,  ll);
+            }
+
+            if(locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)!=null){
+                l=locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+            }else{
+
+                if(locationManager.isProviderEnabled( LocationManager.NETWORK_PROVIDER)&&locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)!=null){
+                    l=locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                }else{
+                    l=locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                    if(l==null){
+                        l=locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                    }
+                    if(l==null){
+                        l=locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
+                    }
+
+                }
+            }
+
+
+            double lat1=l.getLatitude();
+            double lon1=l.getLongitude();
             AdsSummaryObject[] allRelevant = adsSummaryManager.getAllRelevant(lat1, lon1);
             boolean updateRingtone = false;
             if (allRelevant != null && allRelevant.length > 0) {
@@ -247,6 +280,26 @@ public class RingtoneControl {
                 edit.putString(DEFAULT_RINGTONE, u.toString());
                 edit.commit();
             }
+        }
+    }
+
+    private class LocationListner implements LocationListener {
+        @Override
+        public void onLocationChanged(Location location) {
+            if (location != null) {
+                Log.d("LOCATION CHANGED", location.getLatitude() + "");
+                Log.d("LOCATION CHANGED", location.getLongitude() + "");
+
+            }
+        }
+        @Override
+        public void onProviderDisabled(String provider) {
+        }
+        @Override
+        public void onProviderEnabled(String provider) {
+        }
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
         }
     }
 }

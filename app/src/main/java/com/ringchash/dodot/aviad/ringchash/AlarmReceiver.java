@@ -62,7 +62,6 @@ public class AlarmReceiver extends BroadcastReceiver {
 
 
     @Override
-
     public void onReceive(Context context, Intent intent) {
         _context = context;
         // For our recurring task, we'll just display a message
@@ -227,7 +226,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     private static String[] getAllFileNameNotToDownLoad(Context context) {
         File[] fileFromRingCash = getAllFileInRingCash();
-        if (fileFromRingCash == null || fileFromRingCash.length == 0) {
+        if (fileFromRingCash == null) {
             return getAllDownloadListInProgress(context);
         } else {
             String[] inProgress = getAllDownloadListInProgress(context);
@@ -321,6 +320,18 @@ public class AlarmReceiver extends BroadcastReceiver {
         if (dataUpdateFromServer.toRemove != null && dataUpdateFromServer.toRemove.length > 0) {
             removeAllThatNotRelevant(dataUpdateFromServer.toRemove);
         }
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(_context);
+        SharedPreferences.Editor edit = sp.edit();
+        edit.putString(ConfigAppData.CUPON_URL_SP,dataUpdateFromServer.cuponLink);
+        edit.putString(ConfigAppData.TERMS_URL_SP,dataUpdateFromServer.termsLink);
+        edit.putInt(ConfigAppData.PAY_FOR_RING_SP,dataUpdateFromServer.agurot);
+        edit.putInt(ConfigAppData.MIN_FOR_GET_CASH_SP,dataUpdateFromServer.minOfMoneyToGetPaid);
+
+        edit.commit();
+        ConfigAppData.PAY_FOR_RING=((double)(dataUpdateFromServer.agurot))/100;
+        ConfigAppData.CUPON_URL=dataUpdateFromServer.cuponLink;
+        ConfigAppData.MIN_FOR_GET_CASH=dataUpdateFromServer.minOfMoneyToGetPaid;
+        ConfigAppData.TERMS_URL=dataUpdateFromServer.termsLink;
         removeOldFile();
         DownloadAction(_context);
     }
@@ -494,7 +505,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         for (int i = 0; i < arr.length; i++) {
             String name = arr[i].getName();
             Log.d("FILE  " + i + " : ", arr[i].getName());
-
+            removeFromDownloadProgressList(arr[i].getName());
             Uri uri = MediaStore.Audio.Media.getContentUriForPath(arr[i].getAbsolutePath());
             _context.getContentResolver().delete(uri, MediaStore.MediaColumns.DATA + "=\"" + arr[i].getAbsolutePath() + "\"", null);
 
@@ -502,7 +513,43 @@ public class AlarmReceiver extends BroadcastReceiver {
             boolean isS = arr[i].delete();
         }
     }
+    private void removeFromDownloadProgressList(String name){
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(_context);
+        String downloadDataString = sp.getString(ConfigAppData.ADS_LIST_IN_DOWNLOAD_PROGRESS, null);
 
+        Gson gson = new Gson();
+
+        DownLoadData downloadData;
+        if (downloadDataString != null) {
+            downloadData = gson.fromJson(downloadDataString, DownLoadData.class);
+            String[] allDownload=downloadData._downloadList;
+            if(allDownload==null){
+                return;
+            }
+            for(int i=0;i<allDownload.length;i++){
+                if(allDownload[i].equals(name)){
+                    String[] newArr=new String[allDownload.length-1];
+                    int counter=0;
+                    for(int j=0;j<allDownload.length;j++){
+                        if(!allDownload[j].equals(name)) {
+                            newArr[counter] = allDownload[j];
+                            counter++;
+                        }
+                    }
+                    i=allDownload.length+1;
+                    downloadData._downloadList=newArr;
+                }
+            }
+            String str = new Gson().toJson(downloadData);
+            Log.d("Gson : ", str);
+
+            SharedPreferences.Editor edit = sp.edit();
+            edit.putString(ConfigAppData.ADS_LIST_IN_DOWNLOAD_PROGRESS, str);
+            edit.commit();
+
+        }
+
+    }
     private static File[] getAllFileNameToRemove(Context context) {
         File[] fileInSdCard = getAllFileInRingCash();
         String[] fileNameInAddManager = getAllFileNameInAdsManager(context);

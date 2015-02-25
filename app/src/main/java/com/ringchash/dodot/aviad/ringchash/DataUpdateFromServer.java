@@ -6,5 +6,9 @@ package com.ringchash.dodot.aviad.ringchash;
 public class DataUpdateFromServer {
     String[] toRemove;
     String[] updateAds;
+    String termsLink;
+    String cuponLink;
+    int minOfMoneyToGetPaid;
+    int agurot;
 }
 

@@ -9,15 +9,42 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.facebook.Session;
 /**
  * Created by AVIAD on 1/10/2015.
  */
 public class Hello extends Activity {
+    public void makeToastOfSuccessGettingMoney(){
+
+
+        String text=getResources().getString(R.string.ask_money_ok);
+        Toast.makeText(this, text, Toast.LENGTH_LONG).show();
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.hello);
+        Intent iin=getIntent();
+        Bundle b = iin.getExtras();
+
+        if(b!=null)
+        {
+            String j =(String) b.get("fromGotMoney");
+            if(j!=null){
+                if(j.equals("true")){
+                    makeToastOfSuccessGettingMoney();
+                }else{
+                 //   Toast.makeText(this,"j is not null nut not true!",Toast.LENGTH_LONG).show();
+                }
+
+            }else{
+               // Toast.makeText(this,"j  null nut not true!",Toast.LENGTH_LONG).show();
+            }
+
+        }
+
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         String name = sp.getString(ConfigAppData.USER_NAME, null);
         TextView tName=(TextView)findViewById(R.id.user_name);

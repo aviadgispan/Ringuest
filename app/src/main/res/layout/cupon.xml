@@ -40,7 +40,7 @@
                 android:background="@null"
                 android:layout_gravity="center_vertical"
 
-                android:src="@drawable/cupon_hello"
+                android:src="@drawable/cupons_icon"
                 android:adjustViewBounds="false" />
 
             <ImageButton

@@ -66,6 +66,7 @@ public class EditProfile extends Activity {
         DatePicker dp = (DatePicker)
                 findViewById(R.id.datePicker);
         dp.setCalendarViewShown(false);
+
         ImageButton btnMale=(ImageButton)findViewById(R.id.buttonMale);
         ImageButton btnFemale=(ImageButton)findViewById(R.id.buttonFemale);
         Button continueBtn=(Button)findViewById(R.id.finishRegister);
@@ -131,6 +132,9 @@ public class EditProfile extends Activity {
                 if(!isNeedToRegister()){
                     Intent intent = new Intent("com.ringchash.dodot.aviad.ringchash.HELLO");
                     startActivity(intent);
+                }else{
+                    Intent intent = new Intent("com.ringchash.dodot.aviad.ringchash.LOGIN");
+                    startActivity(intent);
                 }
 
 
@@ -179,7 +183,9 @@ public class EditProfile extends Activity {
         EditText emailEdit = (EditText) findViewById(R.id.emailText);
 
         String email=emailEdit.getText().toString();
-        if(email==null||email.length()==0||name==null||name.length()==0){
+        EditText lastNameEdit = (EditText) findViewById(R.id.nameLastEdit);
+        String lastName=lastNameEdit.getText().toString();
+        if(email==null||email.length()==0||name==null||name.length()==0||lastName==null||lastName.length()==0){
             return;
         }
         DatePicker date=(DatePicker)findViewById(R.id.datePicker);
@@ -198,12 +204,13 @@ public class EditProfile extends Activity {
             gender=1;
         }
 
-        saveDataOfUser(this,name,gender, email, day,month,year);
+        saveDataOfUser(this,name,lastName,gender, email, day,month,year);
     }
     public boolean updateData(){
         SharedPreferences sp= PreferenceManager.getDefaultSharedPreferences(this);
         boolean isExistAllData=true;
         String name=sp.getString(ConfigAppData.USER_NAME,null);
+
         if(name!=null&&name.length()>0){
             EditText nameText = (EditText) findViewById(R.id.nameEdit);
             nameText.setText(name, TextView.BufferType.EDITABLE);
@@ -211,7 +218,15 @@ public class EditProfile extends Activity {
         }else{
             isExistAllData=false;
         }
-        String email=sp.getString(ConfigAppData.USER_NAME,null);
+        String lastName=sp.getString(ConfigAppData.USER_LAST_NAME,null);
+        if(lastName!=null&&lastName.length()>0){
+            EditText lastNameText = (EditText) findViewById(R.id.nameLastEdit);
+            lastNameText.setText(lastName, TextView.BufferType.EDITABLE);
+
+        }else{
+            isExistAllData=false;
+        }
+        String email=sp.getString(ConfigAppData.USER_EMAIL,null);
         if(email!=null&&email.length()>0){
             EditText emailText = (EditText) findViewById(R.id.emailText);
             emailText.setText(email, TextView.BufferType.EDITABLE);
@@ -221,18 +236,20 @@ public class EditProfile extends Activity {
         int gender=sp.getInt(ConfigAppData.USER_GENDER,-1);
         if(gender!=-1){
             if(gender==0){
-                setGender(true);
-            }else{
                 setGender(false);
+            }else{
+                setGender(true);
             }
         }else{
             isExistAllData=false;
         }
         int year=sp.getInt(ConfigAppData.USER_BIRTH_YEAR,-1);
         int month=sp.getInt(ConfigAppData.USER_BIRTH_MONTH,-1);
-        int day=sp.getInt(ConfigAppData.USER_BIRTH_MONTH,-1);
+        int day=sp.getInt(ConfigAppData.USER_BIRTH_DAY,-1);
         if(year==-1||month==-1||day==-1){
             isExistAllData=false;
+            DatePicker date=(DatePicker)findViewById(R.id.datePicker);
+            date.updateDate(2000, 5, 15);
         }else{
             DatePicker date=(DatePicker)findViewById(R.id.datePicker);
             date.updateDate(year, month, day);
@@ -252,7 +269,12 @@ public class EditProfile extends Activity {
             isExistAllData = false;
 
         }
-        String email = sp.getString(ConfigAppData.USER_NAME, null);
+        String lastName = sp.getString(ConfigAppData.USER_LAST_NAME, null);
+        if (!(lastName != null && lastName.length() > 0)) {
+            isExistAllData = false;
+
+        }
+        String email = sp.getString(ConfigAppData.USER_EMAIL, null);
         if (!(email != null && email.length() > 0)) {
             isExistAllData = false;
 
@@ -270,14 +292,17 @@ public class EditProfile extends Activity {
         }
         return !isExistAllData;
     }
-    public static  void saveDataOfUser(Context c,String name,int gender,String email,int day,int month,int year){
+    public static  void saveDataOfUser(Context c,String name,String lastName,int gender,String email,int day,int month,int year){
         SharedPreferences sp= PreferenceManager.getDefaultSharedPreferences(c);
         SharedPreferences.Editor edit=sp.edit();
         if(name!=null&&name.length()>0){
 
             edit.putString(ConfigAppData.USER_NAME,name);
         }
+        if(lastName!=null&&lastName.length()>0){
 
+            edit.putString(ConfigAppData.USER_LAST_NAME,lastName);
+        }
         edit.putInt(ConfigAppData.USER_GENDER,gender);
         if(email!=null&&email.length()>0){
             edit.putString(ConfigAppData.USER_EMAIL,email);
@@ -290,14 +315,14 @@ public class EditProfile extends Activity {
         String fb=sp.getString(ConfigAppData.USER_FB_ID,"");
         String phoneNumber=sp.getString(ConfigAppData.USER_PHONE_NUMBER,"");
 
-        updateUserData(c,id,name,gender, email,day, month,year,fb,phoneNumber);
+        updateUserData(c,id,name,lastName,gender, email,day, month,year,fb,phoneNumber);
 
     }
-    public static void updateUserData(final Context c,int userId,String name,int gender,String email,int day,int month,int year,String fb,String phoneNumber){
+    public static void updateUserData(final Context c,int userId,String name,String lastName,int gender,String email,int day,int month,int year,String fb,String phoneNumber){
         final HttpClient httpClient = new DefaultHttpClient();
         final HttpPost httpPost = new HttpPost(ConfigAppData.UPDATE_USER_FROM_SERVER);
 
-        final List<NameValuePair> nameValuePair = new ArrayList<NameValuePair>(9);
+        final List<NameValuePair> nameValuePair = new ArrayList<NameValuePair>(10);
         nameValuePair.add(new BasicNameValuePair("userID",userId+""));
         nameValuePair.add(new BasicNameValuePair("name",name));
         nameValuePair.add(new BasicNameValuePair("gender",gender+""));
@@ -307,7 +332,7 @@ public class EditProfile extends Activity {
         nameValuePair.add(new BasicNameValuePair("year",year+""));
         nameValuePair.add(new BasicNameValuePair("month",month+""));
         nameValuePair.add(new BasicNameValuePair("fbId",fb));
-
+        nameValuePair.add(new BasicNameValuePair("lastName",lastName));
 
         Thread t = new Thread(new Runnable() {
             @Override

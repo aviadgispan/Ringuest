@@ -55,6 +55,23 @@ public class DatabaseOperations extends SQLiteOpenHelper {
         SQ.close();
         return count;
     };
+    public int getDataForTheAppEver(DatabaseOperations dop,int appID){
+       // Calendar c = Calendar.getInstance(Locale.getDefault());
+
+
+        SQLiteDatabase SQ=dop.getReadableDatabase();
+
+
+        Cursor mCount= SQ.rawQuery("select count(*) from "+TableHistoryInfo.TABLE_NAME+" where "+TableHistoryInfo.ID_ADS+"="+appID, null);
+        mCount.moveToFirst();
+        int count= mCount.getInt(0);
+        mCount.close();
+        Log.d("COUNT ",count+"");
+        SQ.close();
+        return count;
+    };
+
+
     public ArrayList<EventSQlite> getAllAfterTime(DatabaseOperations dop,long time){
         SQLiteDatabase SQ=dop.getReadableDatabase();
         String[] tableCol={TableHistoryInfo.ID_ADS,TableHistoryInfo.GPS_ADS,TableHistoryInfo.TIME_ADS};

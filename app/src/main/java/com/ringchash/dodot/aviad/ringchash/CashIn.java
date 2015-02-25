@@ -39,7 +39,9 @@ import java.util.Locale;
 /**
  * Created by AVIAD on 1/11/2015.
  */
+
 public class CashIn extends Activity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -261,7 +263,7 @@ public class CashIn extends Activity {
 
         final HttpClient httpClient = new DefaultHttpClient();
         final HttpPost httpPost = new HttpPost(ConfigAppData.UPDATE_ASK_FOR_MONEY);
-        final List<NameValuePair> nameValuePair = new ArrayList<NameValuePair>(2);
+        final List<NameValuePair> nameValuePair = new ArrayList<NameValuePair>(3);
         nameValuePair.add(new BasicNameValuePair("userId", id + ""));
         nameValuePair.add(new BasicNameValuePair("time", current+""));
         nameValuePair.add(new BasicNameValuePair("appIdArrString",str));
@@ -295,10 +297,13 @@ public class CashIn extends Activity {
                             isOk=false;
                         }
                         if(isOk){
+
+
                             updateAdsHistoryManagerUntilCashThatServerFinished(current);
 
-                            makeToast(getResources().getString(R.string.ask_money_ok));
+
                             Intent intent = new Intent("com.ringchash.dodot.aviad.ringchash.HELLO");
+                            intent.putExtra("fromGotMoney","true");
                             startActivity(intent);
 
                         }
@@ -326,6 +331,12 @@ public class CashIn extends Activity {
 
     public void makeToast(String text){
 
+        Toast.makeText(this,text,Toast.LENGTH_LONG).show();
+    }
+    public void makeToastOfSuccessGettingMoney(){
+
+
+        String text=getResources().getString(R.string.ask_money_ok);
         Toast.makeText(this,text,Toast.LENGTH_LONG).show();
     }
     public  void updateAdsHistoryManagerUntilCashThatServerFinished(long cur){

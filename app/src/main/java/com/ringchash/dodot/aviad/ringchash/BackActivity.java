@@ -358,7 +358,7 @@ public class BackActivity extends Activity {
         }
     }
 
-    private static File[] getAllFileNameToRemove(Context context) {
+    protected static File[] getAllFileNameToRemove(Context context) {
         File[] fileInSdCard = getAllFileNameInRingCash();
         String[] fileNameInAddManager = getAllFileNameInAdsManager(context);
         int counter = 0;

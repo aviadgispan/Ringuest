@@ -20,12 +20,12 @@
                 android:id="@+id/get_cash_header"
                 android:paddingBottom="15dp"
                 android:paddingTop="15dp"
-
+                android:paddingRight="15dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="@string/get_my_money"
-                android:textSize="32sp"
+                android:textSize="28sp"
                 android:textColor="@color/text_color_profile"
                  />
             <ImageButton
@@ -40,7 +40,7 @@
                 android:background="@null"
                 android:layout_gravity="center_vertical"
 
-                android:src="@drawable/cash_in_hello"
+                android:src="@drawable/cash_in_icon"
                 android:adjustViewBounds="false" />
 
             <ImageButton
@@ -70,7 +70,7 @@
         android:layout_height="wrap_content"
         android:paddingTop="20dp"
         android:gravity="center"
-        android:textSize="30dp"
+        android:textSize="28dp"
         android:textColor="@color/cash_in_background_of_button"
         android:text="@string/contact_me_about_money"
         />
@@ -102,7 +102,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/in_your_account"
-        android:textSize="32sp"
+        android:textSize="28sp"
         android:textColor="@color/text_color_profile"
         android:gravity="center" />
 
@@ -124,7 +124,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="@string/coin"
-            android:textSize="32sp"
+            android:textSize="28sp"
             android:textColor="@color/text_color_profile"
             android:gravity="center" />
         <TextView
@@ -133,7 +133,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="@string/optional_sum"
-            android:textSize="32sp"
+            android:textSize="28sp"
             android:textColor="@color/text_color_profile"
             android:gravity="center"/>
             </LinearLayout>

@@ -119,7 +119,7 @@ public class RingtoneTest extends Activity {
     }
     public void updateUserData(){
 
-        EditProfile.saveDataOfUser(this,"Aviad Gispan",1,"aviadgispan@gmail.com",23,9,1984);
+        EditProfile.saveDataOfUser(this,"Aviad","Gispan",1,"aviadgispan@gmail.com",23,9,1984);
     }
     public void removeRingtone() {
 

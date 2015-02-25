@@ -107,9 +107,9 @@ public class AdsSummaryManager {
         }
 
         String[] arr=str.split("\\|");
-        if(arr.length==19){
+        if(arr.length==20){
             return new AdsSummaryObject(arr[0],arr[1],arr[2],arr[3],arr[4],arr[5],arr[6],arr[7],arr[8]
-            ,arr[9],arr[10],arr[11],arr[12],arr[13],arr[14],arr[15],arr[16],arr[17],arr[18]);
+            ,arr[9],arr[10],arr[11],arr[12],arr[13],arr[14],arr[15],arr[16],arr[17],arr[18],arr[19]);
         }
 
         return null;
@@ -138,9 +138,10 @@ public class AdsSummaryManager {
         String userCanSeeDownload="true";
         String titleDownload="title";
         String descriptionDownLoad="description";
-        AdsSummaryObject obj0 = new AdsSummaryObject("1", fileName, priorety, companyName, sumOfMaxTime, maxIn24, validGeoPlace, notValidGeoPlace, startCampaign, endCampaign, validTime, pathToSound, ringtone, notification, alarmClock,onlyWifi,userCanSeeDownload,titleDownload,descriptionDownLoad);
-        AdsSummaryObject obj1 = new AdsSummaryObject("2", fileName, "10"/*priorety*/, "AV", sumOfMaxTime, maxIn24, validGeoPlace, notValidGeoPlace, startCampaign, endCampaign, validTime, pathToSound, ringtone, notification, alarmClock,onlyWifi,userCanSeeDownload,titleDownload,descriptionDownLoad);
-        AdsSummaryObject obj2 = new AdsSummaryObject("3", fileName, "2"/*priorety*/, "DSDS", sumOfMaxTime, maxIn24, validGeoPlace, notValidGeoPlace, startCampaign, endCampaign, validTime, pathToSound, ringtone, notification, alarmClock,onlyWifi,userCanSeeDownload,titleDownload,descriptionDownLoad);
+        String dayes="1#2#4";
+        AdsSummaryObject obj0 = new AdsSummaryObject("1", fileName, priorety, companyName, sumOfMaxTime, maxIn24, validGeoPlace, notValidGeoPlace, startCampaign, endCampaign, validTime, pathToSound, ringtone, notification, alarmClock,onlyWifi,userCanSeeDownload,titleDownload,descriptionDownLoad,dayes);
+        AdsSummaryObject obj1 = new AdsSummaryObject("2", fileName, "10"/*priorety*/, "AV", sumOfMaxTime, maxIn24, validGeoPlace, notValidGeoPlace, startCampaign, endCampaign, validTime, pathToSound, ringtone, notification, alarmClock,onlyWifi,userCanSeeDownload,titleDownload,descriptionDownLoad,dayes);
+        AdsSummaryObject obj2 = new AdsSummaryObject("3", fileName, "2"/*priorety*/, "DSDS", sumOfMaxTime, maxIn24, validGeoPlace, notValidGeoPlace, startCampaign, endCampaign, validTime, pathToSound, ringtone, notification, alarmClock,onlyWifi,userCanSeeDownload,titleDownload,descriptionDownLoad,dayes);
         AdsSummaryObject[] arr = new AdsSummaryObject[3];
         arr[0] = obj0;
         arr[1] = obj1;
@@ -249,7 +250,7 @@ public class AdsSummaryManager {
 
         Location l;
         LocationListener ll = new LocationListner();
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, ll);
+       // locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, ll);
         if(locationManager.isProviderEnabled( LocationManager.GPS_PROVIDER )){
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,  ll);
         }
@@ -309,17 +310,19 @@ public class AdsSummaryManager {
         for (int i = 0; i < this._arr.length; i++) {
             boolean isOn = this._arr[i]._isOn;
             boolean valid = this._arr[i]._valid;
+            boolean isValidDay=this._arr[i].isInValidDay();
             boolean isInCampaignHours = this._arr[i].isInCampaignTimeHours();
             boolean isInCampaignTime = this._arr[i].isInCampaignTime();
             boolean isInBoundaries = this._arr[i].isBoundaries(lat1, lon1);
             boolean isFinishDownload=this._arr[i].isFinishDownload();
             boolean isCounterLessThenMaxIn24 = this._arr[i].counterLessThenMaxIn24(this._context);
-            if (valid && isOn && isInCampaignHours && isInCampaignTime && isInBoundaries && isCounterLessThenMaxIn24&&isFinishDownload) {
+            boolean isEverFinished=this._arr[i].counterAdsIdEver(this._context);
+            if (valid && isOn && isInCampaignHours &&isEverFinished&&isValidDay&& isInCampaignTime && isInBoundaries && isCounterLessThenMaxIn24&&isFinishDownload) {
                 boolArr[i] = true;
                 counter++;
             } else {
                 boolArr[i] = false;
-                ;
+
             }
         }
         if (counter == 0) {

@@ -1,6 +1,7 @@
 package com.ringchash.dodot.aviad.ringchash;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import java.io.File;
 import java.util.Calendar;
@@ -38,10 +39,10 @@ public class AdsSummaryObject {
     boolean _userCanSeeDownload;
     String _titleDownload;
     String _descriptionDownLoad;
-
+    int[] _dayes;
     public AdsSummaryObject(String id, String fileName, String priority, String compenyName, String sumOfMaxTime, String maxIn24, String validGeoPlace, String notValidGeoPlace,
                             String startCampaign, String endCampaign, String validTime
-            , String pathToSound, String ringtone, String notification, String alarmClock, String onlyWifi, String userCanSeeDownload, String titleDownload, String descriptionDownLoad) {
+            , String pathToSound, String ringtone, String notification, String alarmClock, String onlyWifi, String userCanSeeDownload, String titleDownload, String descriptionDownLoad,String dayes) {
 
         if (isNumberInt(maxIn24)) {
             this._maxIn24 = Integer.parseInt(maxIn24);
@@ -53,6 +54,29 @@ public class AdsSummaryObject {
             this._id = Integer.parseInt(id);
         } else {
             this._valid = false;
+        }
+        if(dayes==null||dayes.length()==0){
+            this._dayes=new int[0];
+        }else{
+            String[] dayesString=dayes.split("#");
+            if(dayesString==null){
+                this._dayes=new int[0];
+            }else{
+                int counter=0;
+                for(int i=0;i<dayesString.length;i++){
+                    if(isNumberInt(dayesString[i])){
+                        counter++;
+                    }
+                }
+                this._dayes=new int[counter];
+                counter=0;
+                for(int i=0;i<dayesString.length;i++){
+                    if(isNumberInt(dayesString[i])){
+                        this._dayes[counter]=Integer.parseInt(dayesString[i]);
+                        counter++;
+                    }
+                }
+            }
         }
         this._titleDownload = titleDownload;
         this._descriptionDownLoad = descriptionDownLoad;
@@ -309,10 +333,23 @@ public class AdsSummaryObject {
         DatabaseOperations db = new DatabaseOperations(t);
         int timeToday = db.getDataForTheLast24hour(db, this._id);
         return this._maxIn24 > timeToday;
-    }
-
-    ;
-
+    };
+    public boolean counterAdsIdEver(Context ctx) {
+        Context t = ctx;
+        DatabaseOperations db = new DatabaseOperations(t);
+        int timeEver = db.getDataForTheAppEver(db, this._id);
+        return this._sumOfMaxTime > timeEver;
+    };
+       public boolean isInValidDay(){
+           Calendar c = Calendar.getInstance(Locale.getDefault());
+           int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+           for(int i=0;i<this._dayes.length;i++){
+               if(dayOfWeek==this._dayes[i]){
+                   return true;
+               }
+           }
+    return false;
+       }
     public boolean isInCampaignTimeHours() {
         boolean isTrue = false;
         if (this._validTime == null) {

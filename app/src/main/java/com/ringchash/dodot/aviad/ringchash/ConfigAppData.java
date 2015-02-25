@@ -6,9 +6,9 @@ package com.ringchash.dodot.aviad.ringchash;
 public class ConfigAppData {
     ////////////////////SERVER DATA //////////////////////
 // /  "http://10.0.0.2:8080"
-   // public static final String URL_SERVER="http://ec2-54-93-56-200.eu-central-1.compute.amazonaws.com:8080";
+    public static final String URL_SERVER="http://ec2-54-93-56-200.eu-central-1.compute.amazonaws.com:8080";
 
-   public static final String URL_SERVER="http://10.0.0.6:8080";
+//   public static final String URL_SERVER="http://10.0.0.2:8080";
     public static final String UPDATE_ASK_FOR_MONEY=URL_SERVER+"/updateAskForMoney";
     public static final String UPDATE_ADS_DATA_HISTORY_FROM_USER=URL_SERVER+"/updateAdsData";
     public static final String UPDATE_ADS_DATA_FROM_SERVER=URL_SERVER+"/getMyAdsData";
@@ -20,6 +20,7 @@ public class ConfigAppData {
      */
     public static final String USER_NAME="USER_NAME";
 
+    public static final String USER_LAST_NAME="USER_LAST_NAME";
     public static final String USER_PHONE_NUMBER="USER_PHONE_NUMBER";
 
     /*
@@ -64,14 +65,20 @@ public class ConfigAppData {
     public static final long UPDATE_FILE_INTERVAL=UPDATE_INTERVAL*2;
     public static final long UPDATE_SERVER_DATA_INTERVAL=UPDATE_INTERVAL*5;
 
-    public static final String CUPON_URL="https://s3-eu-west-1.amazonaws.com/matos/cupon.png";
+    public static String CUPON_URL="https://s3-eu-west-1.amazonaws.com/matos/cupon.png";
+    public static String TERMS_URL="https://s3-eu-west-1.amazonaws.com/matos/terms.htm";
+    public static double PAY_FOR_RING=1.5;
+    public static int MIN_FOR_GET_CASH=2;
 
-    public static final double PAY_FOR_RING=1.5;
-    public static final double MIN_FOR_GET_CASH=2;
+    public static final String CUPON_URL_SP="CUPON_URL";
+    public static final String TERMS_URL_SP="TERMS_URL_SP";
+    public static final String PAY_FOR_RING_SP="PAY_FOR_RING_SP";
+    public static final String MIN_FOR_GET_CASH_SP="MIN_FOR_GET_CASH_SP";
 
     public static final String COUNTER_ALL_RING="COUNTER_ALL_RING";
     public static final String COUNTER_ALL_RING_THAT_UNPAID="COUNTER_ALL_RING_THAT_UNPAID";
 
 
     public static final String FIRST_RUN="FIRST_RUN";
+
 }
