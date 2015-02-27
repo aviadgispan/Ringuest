@@ -202,7 +202,7 @@ public class AdsSummaryObject {
         String[] temp = str.split("#");
         int[][] sol = new int[temp.length][2];
         for (int i = 0; i < sol.length; i++) {
-            String[] inner = temp[i].split("-");
+            String[] inner = temp[i].split("&");
             if (inner == null || inner.length != 2 || !isNumberInt(inner[0]) || !isNumberInt(inner[1])) {
                 return null;
             } else {

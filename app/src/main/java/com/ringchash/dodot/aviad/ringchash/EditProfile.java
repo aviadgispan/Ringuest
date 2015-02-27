@@ -95,11 +95,17 @@ public class EditProfile extends Activity {
 
                 saveData();
                 if(!isNeedToRegister()){
-                    startRunIfNeed();
-                    Intent intent = new Intent("com.ringchash.dodot.aviad.ringchash.HELLO");
-                    startActivity(intent);
-                    String str = getResources().getString(R.string.all_details_are_in);
-                    makeToast(str);
+                    if(isValidMail()){
+                        startRunIfNeed();
+                        Intent intent = new Intent("com.ringchash.dodot.aviad.ringchash.HELLO");
+                        startActivity(intent);
+                        String str = getResources().getString(R.string.all_details_are_in);
+                        makeToast(str);
+                    }else{
+                        String str=getResources().getString(R.string.mail_is_not_valid);
+                        makeToast(str);
+                    }
+
 
 
                 }else{
@@ -143,6 +149,32 @@ public class EditProfile extends Activity {
 
         //   saveDataOfUser(this,"Aviad Gispan",1,"aviadgispan@gmail.com",23,9,1984);
     }
+    public boolean isValidMail(){
+        EditText emailEdit = (EditText) findViewById(R.id.emailText);
+
+        String email=emailEdit.getText().toString();
+        if(email==null||email.length()<3){
+            return false;
+        }
+        boolean foundStrudel=false;
+        boolean foundDot=false;
+        for(int i=0;i<email.length();i++){
+            if(email.charAt(i)=='@'){
+                if(foundStrudel){
+                    return false;
+                }else{
+                    foundStrudel=true;
+                }
+            }
+            if(foundStrudel){
+                if(email.charAt(i)=='.'){
+                    foundDot=true;
+                }
+            }
+        }
+        return foundDot&&foundStrudel;
+    }
+
     public void startRunIfNeed(){
         SharedPreferences sp= PreferenceManager.getDefaultSharedPreferences(this);
         boolean firstRun=sp.getBoolean(ConfigAppData.FIRST_RUN,true);

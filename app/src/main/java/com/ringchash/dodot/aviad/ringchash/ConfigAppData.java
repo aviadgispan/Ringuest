@@ -8,7 +8,7 @@ public class ConfigAppData {
 // /  "http://10.0.0.2:8080"
     public static final String URL_SERVER="http://ec2-54-93-56-200.eu-central-1.compute.amazonaws.com:8080";
 
-//   public static final String URL_SERVER="http://10.0.0.2:8080";
+//  public static final String URL_SERVER="http://10.0.0.2:8080";
     public static final String UPDATE_ASK_FOR_MONEY=URL_SERVER+"/updateAskForMoney";
     public static final String UPDATE_ADS_DATA_HISTORY_FROM_USER=URL_SERVER+"/updateAdsData";
     public static final String UPDATE_ADS_DATA_FROM_SERVER=URL_SERVER+"/getMyAdsData";

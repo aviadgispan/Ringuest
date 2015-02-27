@@ -6,7 +6,7 @@
     <string name="action_settings">Settings</string>
 
 
-
+    <string name="mail_is_not_valid">כתובת המייל שהוזנה איננה תקינה</string>
     <string name="name_field_edit_profile">שם:</string>
     <string name="last_name">שם משפחה:</string>
     <string name="birth_year_edit_profile">שנת לידה:</string>
@@ -26,9 +26,9 @@
     <string name="profile">פרופיל</string>
     <string name="coupon_hello">"   קופונים"</string>
     <string name="coupon">קופונים</string>
-
+<string name="all_profit">סך הכל צברת:</string>
     <string name="in_your_account">בחשבונך יש כעת:</string>
-    <string name="all_profit">סך הכל נצברו בחשבונך:</string>
+
     <string name="coin">ש"ח</string>
     <string name="optional_sum">"   100"</string>
     <string name="send_me_money">שלח לי כסף</string>

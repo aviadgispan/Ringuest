@@ -6,10 +6,13 @@ import android.content.Intent;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.graphics.Point;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -27,6 +30,7 @@ import java.net.URL;
  */
 public class Cupon extends Activity {
 
+    int _w;
 
     @Override
 
@@ -57,7 +61,24 @@ public class Cupon extends Activity {
 
 
     }
+    public Bitmap getResizedBitmap(Bitmap bm) {
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int newWidth = size.x;
+        int width = bm.getWidth();
+        int height = bm.getHeight();
+        float scaleWidth = ((float) newWidth) / width;
+        float scaleHeight = scaleWidth;
+        // CREATE A MATRIX FOR THE MANIPULATION
+        Matrix matrix = new Matrix();
+        // RESIZE THE BIT MAP
+        matrix.postScale(scaleWidth, scaleHeight);
 
+        // "RECREATE" THE NEW BITMAP
+        Bitmap resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, false);
+        return resizedBitmap;
+    }
 
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         ImageView bmImage;
@@ -80,7 +101,7 @@ public class Cupon extends Activity {
         }
 
         protected void onPostExecute(Bitmap result) {
-
+           result=getResizedBitmap(result);
             bmImage.setImageBitmap(result);
 
         }

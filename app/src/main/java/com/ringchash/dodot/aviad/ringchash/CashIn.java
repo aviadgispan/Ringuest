@@ -59,6 +59,10 @@ public class CashIn extends Activity {
         SharedPreferences sp= PreferenceManager.getDefaultSharedPreferences(this);
         int counterRingUnPaid=sp.getInt(ConfigAppData.COUNTER_ALL_RING_THAT_UNPAID,0);
         double sumOfAllMoneyFromRingUnPaid=counterRingUnPaid*ConfigAppData.PAY_FOR_RING;
+        sumOfAllMoneyFromRingUnPaid=sumOfAllMoneyFromRingUnPaid*100;
+        sumOfAllMoneyFromRingUnPaid=Math.round(sumOfAllMoneyFromRingUnPaid);
+        sumOfAllMoneyFromRingUnPaid=sumOfAllMoneyFromRingUnPaid/100;
+
         TextView moneyUnPaid=(TextView)findViewById(R.id.cash_now_in_bill_sum);
         moneyUnPaid.setText(" "+sumOfAllMoneyFromRingUnPaid);
         backButton.setOnClickListener(new View.OnClickListener() {

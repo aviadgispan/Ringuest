@@ -28,7 +28,7 @@ public class PhoneStateMonitor extends PhoneStateListener {
     long startRing;
     public static final int MIN_RING_TIME_MIL=4000;
     public static final int MAX_RING_TIME_MIL=180000;
-    public static final double VALID_VOLUME=0;
+    public static final double VALID_VOLUME=0.7;
     public PhoneStateMonitor(Context context) {
         super();
         // TODO Auto-generated constructor stub

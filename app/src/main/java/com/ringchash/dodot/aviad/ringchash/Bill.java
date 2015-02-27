@@ -34,7 +34,17 @@ public class Bill extends Activity{
         double sumOfAllMoneyFromRing=counterRing*ConfigAppData.PAY_FOR_RING;
 
         double sumOfAllMoneyFromRingUnPaid=counterRingUnPaid*ConfigAppData.PAY_FOR_RING;
+        sumOfAllMoneyFromRing=sumOfAllMoneyFromRing*100;
+        sumOfAllMoneyFromRing=Math.round(sumOfAllMoneyFromRing);
+        sumOfAllMoneyFromRing=sumOfAllMoneyFromRing/100;
 
+        sumOfAllMoneyFromRing=sumOfAllMoneyFromRing*100;
+        sumOfAllMoneyFromRing=Math.round(sumOfAllMoneyFromRing);
+        sumOfAllMoneyFromRing=sumOfAllMoneyFromRing/100;
+//        double val = ....;
+//        val = val*100;
+//        val = Math.Round(val);
+//        val = val /100;
         for(int i=0;i<arrOfTextId.length;i++){
             TextView t=(TextView)findViewById(arrOfTextId[i]);
             t.setTypeface(tfAlef);
