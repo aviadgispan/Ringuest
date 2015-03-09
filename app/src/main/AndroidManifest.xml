@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     android:versionCode="3"
     android:versionName='0.0.2'
-    package="com.ringchash.dodot.aviad.ringchash" >
+    package="com.ringchash.dodot.aviad.ringuest" >
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -20,7 +20,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".Splash"
+            android:name="com.ringchash.dodot.aviad.ringuest.Splash"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,7 +28,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".RingList"
+            android:name="com.ringchash.dodot.aviad.ringuest.RingList"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="com.ringchash.dodot.aviad.ringchash.RING_LIST" />
@@ -38,7 +38,7 @@
         </activity>
 
         <activity
-            android:name=".Bill"
+            android:name="com.ringchash.dodot.aviad.ringuest.Bill"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="com.ringchash.dodot.aviad.ringchash.BILL" />
@@ -48,7 +48,7 @@
         </activity>
 
         <activity
-            android:name=".Login"
+            android:name="com.ringchash.dodot.aviad.ringuest.Login"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="com.ringchash.dodot.aviad.ringchash.LOGIN" />
@@ -58,7 +58,7 @@
         </activity>
 
         <activity
-            android:name=".Hello"
+            android:name="com.ringchash.dodot.aviad.ringuest.Hello"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="com.ringchash.dodot.aviad.ringchash.HELLO" />
@@ -67,7 +67,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Cupon"
+            android:name="com.ringchash.dodot.aviad.ringuest.Cupon"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="com.ringchash.dodot.aviad.ringchash.CUPON" />
@@ -76,7 +76,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".CashIn"
+            android:name="com.ringchash.dodot.aviad.ringuest.CashIn"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="com.ringchash.dodot.aviad.ringchash.CASH_IN" />
@@ -85,7 +85,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".EditProfile"
+            android:name="com.ringchash.dodot.aviad.ringuest.EditProfile"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="com.ringchash.dodot.aviad.ringchash.EDIT_PROFILE" />
@@ -94,7 +94,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".RingtoneTest"
+            android:name="com.ringchash.dodot.aviad.ringuest.RingtoneTest"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="com.ringchash.dodot.aviad.ringchash.EINGTEST" />
@@ -105,7 +105,7 @@
 
 
         <activity
-            android:name=".AdsList"
+            android:name="com.ringchash.dodot.aviad.ringuest.AdsList"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="com.ringchash.dodot.aviad.ringchash.ADSLIST" />
@@ -114,7 +114,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".EventAds"
+            android:name="com.ringchash.dodot.aviad.ringuest.EventAds"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="com.ringchash.dodot.aviad.ringchash.EVENTADS" />
@@ -124,7 +124,7 @@
         </activity>
 
         <activity
-            android:name=".BackActivity"
+            android:name="com.ringchash.dodot.aviad.ringuest.BackActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="com.ringchash.dodot.aviad.ringchash.BACK" />
@@ -132,16 +132,16 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <service android:name=".ManagerService"></service>
-        <receiver android:name=".AlarmReceiver">
+        <service android:name="com.ringchash.dodot.aviad.ringuest.ManagerService"></service>
+        <receiver android:name="com.ringchash.dodot.aviad.ringuest.AlarmReceiver">
 
         </receiver>
-        <receiver android:name=".PhoneStateReceiver">                     <!-- 6 -->
+        <receiver android:name="com.ringchash.dodot.aviad.ringuest.PhoneStateReceiver">                     <!-- 6 -->
             <intent-filter>                                                   <!-- 7 -->
                 <action android:name="android.intent.action.PHONE_STATE"/>   <!-- 8 -->
             </intent-filter>
         </receiver>
-        <receiver android:name=".BootReceiver">
+        <receiver android:name="com.ringchash.dodot.aviad.ringuest.BootReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>

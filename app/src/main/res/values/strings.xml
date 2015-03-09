@@ -42,7 +42,7 @@
     <string name="ask_money_ok">הבקשה נקלטה בהצלחה. </string>
     <string name="text_terms_of_use1">הנני מסכים ל</string>
     <string name="text_terms_of_use2"><a href="https://s3-eu-west-1.amazonaws.com/matos/terms.htm">תנאי ההצטרפות</a></string>
-
+    <string name="network_error">בעיית תקשורת! עליך להיות מחובר לרשת</string>
     <string name="app_id">773470569399510</string>
     <string name="need_user_consent">יש להסכים לתנאי השימוש!</string>
 </resources>

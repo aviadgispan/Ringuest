@@ -5,10 +5,10 @@ android {
     buildToolsVersion "21.1.2"
 
     defaultConfig {
-        applicationId "com.ringchash.dodot.aviad.ringchash"
+        applicationId "com.ringchash.dodot.aviad.ringuest"
         minSdkVersion 15
         targetSdkVersion 21
-        versionCode 8
+        versionCode 10
         versionName "1.0"
     }
     buildTypes {
